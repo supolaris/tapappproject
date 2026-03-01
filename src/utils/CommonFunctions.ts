@@ -1,6 +1,5 @@
-// import auth from "@react-native-firebase/auth";
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
-// import moment from 'moment';
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AxiosError } from "axios";
 import moment from "moment";
 import { Dimensions, PixelRatio, Platform } from "react-native";
@@ -69,21 +68,24 @@ export const normalizeFont = (size: number) => {
   return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 1;
 };
 
-// export const clearLogoutData = async () => {
-//   try {
-//     await auth().signOut();
-//     await GoogleSignin.revokeAccess();
-//     MMKVStorage.removeItem("UserEmail");
-//     MMKVStorage.removeItem("UserName");
-//     MMKVStorage.removeItem("UserImage");
-//     MMKVStorage.removeItem("FirebaseToken");
-//     global.token = "";
-//     return true;
-//   } catch (error) {
-//     console.error("Error signing out:", error);
-//   } finally {
-//   }
-// };
+export const clearLogoutData = async () => {
+  try {
+    await auth().signOut();
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    MMKVStorage.removeItem("UserEmail");
+    MMKVStorage.removeItem("UserName");
+    MMKVStorage.removeItem("UserImage");
+    MMKVStorage.removeItem("FirebaseToken");
+    if (typeof global !== "undefined") {
+      global.token = "";
+    }
+    return true;
+  } catch (error) {
+    console.error("Error signing out:", error);
+  } finally {
+  }
+};
 
 export const getLanguageName = (value: string): string => {
   return languagesData[value] || value;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import auth from "@react-native-firebase/auth";
 import { requestTimeout } from "../constants/AppConstants";
 import { AppMessages } from "../constants/AppMessages";
 import { MMKVStorage, simpleToast } from "../utils/CommonFunctions";
@@ -35,8 +36,7 @@ const getAuthToken = (): string | null => {
 
 // Refresh Firebase auth token
 const refreshAuthToken = async (): Promise<string> => {
-  // const currentUser = auth.currentUser;
-  const currentUser = null;
+  const currentUser = auth().currentUser;
   if (!currentUser) {
     throw new Error("No authenticated user found");
   }
@@ -56,11 +56,17 @@ const refreshAuthToken = async (): Promise<string> => {
 
 // Handle logout on failed refresh
 const handleAuthFailure = () => {
-  // Clear stored token
+  // Clear stored token and user data
   MMKVStorage.removeItem("FirebaseToken");
+  MMKVStorage.removeItem("UserEmail");
+  MMKVStorage.removeItem("UserName");
+  MMKVStorage.removeItem("UserImage");
   if (typeof global !== "undefined") {
     global.token = "";
   }
+
+  // Sign out from Firebase
+  auth().signOut().catch(console.error);
 
   // Show toast message
   simpleToast("Session expired, please log in again");
@@ -87,15 +93,46 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    // Log request for debugging
+    const fullUrl = `${config.baseURL}${config.url}`;
+    console.log("\n=== API REQUEST ===");
+    console.log(`Method: ${config.method?.toUpperCase()}`);
+    console.log(`URL: ${fullUrl}`);
+    if (config.data) {
+      console.log(`Body:`, JSON.stringify(config.data, null, 2));
+    }
+    console.log(`Has Token: ${!!token}`);
+    console.log("====================\n");
+
     return config;
   },
   (error) => Promise.reject(error),
 );
 
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Log successful response for debugging
+    console.log("\n=== API RESPONSE SUCCESS ===");
+    console.log(`Method: ${response.config.method?.toUpperCase()}`);
+    console.log(`URL: ${response.config.url}`);
+    console.log(`Status: ${response.status}`);
+    console.log(`Data:`, JSON.stringify(response.data, null, 2));
+    console.log("============================\n");
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
+
+    // Log error for debugging
+    console.log("\n=== API RESPONSE ERROR ===");
+    console.log(`Method: ${originalRequest?.method?.toUpperCase()}`);
+    console.log(`URL: ${originalRequest?.url}`);
+    console.log(`Status: ${error.response?.status}`);
+    console.log(`Message: ${error.message}`);
+    if (error.response?.data) {
+      console.log(`Response Data:`, JSON.stringify(error.response.data, null, 2));
+    }
+    console.log("===========================\n");
 
     if (!error.response) {
       simpleToast("Something went wrong, please try again");

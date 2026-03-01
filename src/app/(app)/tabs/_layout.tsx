@@ -60,22 +60,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="login"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Text
-              style={{
-                color: focused ? "#FFFFFF" : "#666666",
-                fontSize: 15,
-                fontWeight: focused ? "600" : "400",
-              }}
-            >
-              Login
-            </Text>
-          ),
-        }}
-      />
     </Tabs>
   );
 }
