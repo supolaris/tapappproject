@@ -61,3 +61,12 @@ export interface IProfileInteractionData {
   target_user_id: number;
   interaction: string;
 }
+
+export interface IMatchedProfiles {
+  person_id: number;
+  first_name: string;
+  default_image: string;
+  milesAway: number;
+  cityName: string;
+  debug: null;
+}

@@ -1,6 +1,6 @@
 import {
   useGetAllowedValues,
-  useGetUserImages,
+  useGetUserById,
   // useGetUserById,
   useGetUserPreferences,
 } from "@/src/services/ProfilePreviewServices";
@@ -11,25 +11,21 @@ import ProfilePreview from "./ProfilePreview";
 export function ProfilePreviewScreen() {
   const params = useLocalSearchParams();
 
-  const userId = params?.userData ? params?.userData : "";
+  const userId = params?.userId ? params?.userId : -1;
 
-  // const userDataResponse = useGetUserById(userId);
-  const userImagesResponse = useGetUserImages();
+  const userDataResponse = useGetUserById(userId as number);
   const allowedValuesResponse = useGetAllowedValues();
   const userPreferencesResponse = useGetUserPreferences();
-
-  // console.log("userImagesResponse", userImagesResponse?.data);
 
   return (
     <ProfilePreview
       isLoading={
-        userImagesResponse?.isLoading ||
+        userDataResponse?.isLoading ||
         allowedValuesResponse?.isLoading ||
         userPreferencesResponse?.isLoading
       }
-      userImages={userImagesResponse?.data}
       allowedValues={allowedValuesResponse?.data}
-      userPreferences={userPreferencesResponse?.data}
+      userByIdData={userDataResponse?.data}
     />
   );
 }

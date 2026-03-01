@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { IUserImages } from "@/src/@types/apiInterfaces/MyProfilePreferencesInterface";
+import { IUserImages } from "@/src/@types/CommonTypes";
 import { useIsFocused } from "@react-navigation/native";
 import {
   FlatList,
@@ -49,16 +49,16 @@ const RenderImagesPreview = (props: IProps) => {
     return null;
   }
 
-  const renderBanners = ({ item }: { item: IUserImages }) => {
+  const renderImages = ({ item }: { item: IUserImages }) => {
     return (
-      <View style={{ width: 396 }}>
+      <View style={{ width: 396, borderBottomWidth: 1 }}>
         <TouchableOpacity
           activeOpacity={activeOpacity}
           onPress={onImagePressed}
         >
           <Image
             resizeMode="stretch"
-            source={{ uri: item.URL }}
+            source={{ uri: item.image_url }}
             style={{ width: "100%", height: 200 }}
           />
         </TouchableOpacity>
@@ -69,7 +69,7 @@ const RenderImagesPreview = (props: IProps) => {
   return (
     <View style={styles.container}>
       <ImageView
-        images={props.userImages?.map((img) => ({ uri: img.URL }))}
+        images={props.userImages?.map((img) => ({ uri: img.image_url }))}
         imageIndex={0}
         visible={visible}
         onRequestClose={() => setIsVisible(false)}
@@ -81,7 +81,7 @@ const RenderImagesPreview = (props: IProps) => {
         decelerationRate="fast"
         snapToAlignment="center"
         scrollEventThrottle={16}
-        renderItem={renderBanners}
+        renderItem={renderImages}
         snapToInterval={397}
         showsHorizontalScrollIndicator={false}
         data={props.userImages}

@@ -1,5 +1,5 @@
-import axios from "axios";
 import auth from "@react-native-firebase/auth";
+import axios from "axios";
 import { requestTimeout } from "../constants/AppConstants";
 import { AppMessages } from "../constants/AppMessages";
 import { MMKVStorage, simpleToast } from "../utils/CommonFunctions";
@@ -115,8 +115,8 @@ apiClient.interceptors.response.use(
     console.log("\n=== API RESPONSE SUCCESS ===");
     console.log(`Method: ${response.config.method?.toUpperCase()}`);
     console.log(`URL: ${response.config.url}`);
-    console.log(`Status: ${response.status}`);
-    console.log(`Data:`, JSON.stringify(response.data, null, 2));
+    // console.log(`Status: ${response.status}`);
+    // console.log(`Data:`, JSON.stringify(response.data, null, 2));
     console.log("============================\n");
     return response;
   },
@@ -130,7 +130,10 @@ apiClient.interceptors.response.use(
     console.log(`Status: ${error.response?.status}`);
     console.log(`Message: ${error.message}`);
     if (error.response?.data) {
-      console.log(`Response Data:`, JSON.stringify(error.response.data, null, 2));
+      console.log(
+        `Response Data:`,
+        JSON.stringify(error.response.data, null, 2),
+      );
     }
     console.log("===========================\n");
 

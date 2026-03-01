@@ -1,4 +1,5 @@
-import { ICurlLocation, Nullable } from "./commonInterface";
+import { IUserImages } from "../CommonTypes";
+import { ICurlLocation } from "./commonInterface";
 
 // my profile preferences
 export interface IMyProfilePreferences {
@@ -62,16 +63,6 @@ export interface IMyProfilePreferences {
   TapMyCommunicationStylePreferredCommunicationMethod: string;
   CurLocation: ICurlLocation;
   images: IUserImages[];
-}
-
-export interface IUserImages {
-  ID: number;
-  order: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  URL: string;
-  UserID: number;
-  DeletedAt: Nullable<string>;
 }
 
 // save response

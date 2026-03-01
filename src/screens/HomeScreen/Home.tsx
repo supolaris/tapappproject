@@ -11,7 +11,7 @@ interface IHomeProps {
   isHomeSwipePopupVisible: boolean;
   homeUsersData: any[];
   onUserSwipe: (index: number, interaction: string) => void;
-  onUserDetailsPressed: (userData: any) => void;
+  onUserDetailsPressed: (userId: number) => void;
 }
 
 const Home = (props: IHomeProps) => {
@@ -41,7 +41,9 @@ const Home = (props: IHomeProps) => {
           cardVerticalMargin={0}
           cardHorizontalMargin={0}
           cards={props.homeUsersData}
-          keyExtractor={(cardData) => cardData?.profile?.TapUserID ?? null}
+          keyExtractor={(cardData, index) =>
+            cardData?.profile?.TapUserID ?? index
+          }
           onSwipedTop={(index) => props.onUserSwipe(index, "superlike")}
           onSwipedLeft={(index) => props.onUserSwipe(index, "dislike")}
           onSwipedRight={(index) => props.onUserSwipe(index, "like")}

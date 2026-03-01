@@ -48,7 +48,7 @@ export function HomeScreen() {
   };
 
   const onUserSwipe = (index: number, interaction: string) => {
-    const targetUserId = homeUsersResponse?.data?.[index]?.profile?.TapUserID;
+    const targetUserId = homeUsersResponse?.data?.[index]?.person_id;
 
     if (!targetUserId) {
       console.log("Target user id not found =>>>>>", targetUserId);
@@ -94,14 +94,14 @@ export function HomeScreen() {
   };
 
   const onUserDetailsPressed = (userId: number) => {
-    // if (!userId) {
-    //   console.log("userId is not available for preview =>>>>>", userId);
-    //   return;
-    // }
+    if (!userId) {
+      console.log("userId is not available for preview =>>>>>", userId);
+      return;
+    }
     router.push({
       pathname: "/(app)/profilePreview.router",
       params: {
-        userData: userId,
+        userId: userId,
       },
     });
   };

@@ -12,12 +12,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { IHomeUsersData } from "../../../@types/apiInterfaces/homeInterface";
+import { IMatchedProfiles } from "../../../@types/apiInterfaces/homeInterface";
 import { TapAppColors } from "../../../constants/TapAppColors";
 
 interface IProps {
-  item: IHomeUsersData;
-  onUserDetailsPressed: (userData: any) => void;
+  item: IMatchedProfiles;
+  onUserDetailsPressed: (userId: number) => void;
 }
 
 const RenderHomeUserSwiper = (props: IProps) => {
@@ -75,7 +75,7 @@ const RenderHomeUserSwiper = (props: IProps) => {
 
           <TouchableOpacity
             style={styles.iconTouchable}
-            onPress={() => props.onUserDetailsPressed(props.item)}
+            onPress={() => props.onUserDetailsPressed(props.item?.person_id)}
           >
             <AntDesign
               style={styles.flatListLocationIcon}

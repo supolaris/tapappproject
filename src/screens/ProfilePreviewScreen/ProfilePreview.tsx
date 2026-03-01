@@ -1,5 +1,5 @@
 import { IAllowedValues } from "@/src/@types/apiInterfaces/commonInterface";
-import { IUserImages } from "@/src/@types/apiInterfaces/MyProfilePreferencesInterface";
+import { IUserByIdData } from "@/src/@types/apiInterfaces/ProfilePreviewInterface";
 import CustomText from "@/src/components/common/CustomText";
 import Loader from "@/src/components/common/Loader";
 import RenderImagesPreview from "@/src/components/common/renderComponents/RenderImagesPreview";
@@ -10,16 +10,15 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 interface IProps {
   isLoading: boolean;
-  userPreferences: any;
-  userImages: IUserImages[];
   allowedValues: IAllowedValues[];
+  userByIdData: IUserByIdData;
 }
 
 const ProfilePreview = (props: IProps) => {
   return (
     <View style={styles.container}>
-      {props.userImages && (
-        <RenderImagesPreview userImages={props.userImages} />
+      {props.userByIdData?.profile?.images && (
+        <RenderImagesPreview userImages={props.userByIdData?.profile?.images} />
       )}
 
       <Loader isLoading={props.isLoading} />
@@ -41,7 +40,7 @@ const ProfilePreview = (props: IProps) => {
               fontSize: 20,
               fontWeight: "semiBold",
               color: TapAppColors.black,
-              text: `${props.userPreferences?.FirstName} ${props.userPreferences?.LastName},`,
+              text: `${props.userByIdData?.first_name},`,
             }}
             style={{
               width: "80%",
@@ -61,23 +60,24 @@ const ProfilePreview = (props: IProps) => {
           )} */}
         </View>
 
-        {/* {props.userPreferences?.TapPrivacyShowGender && (
+        {props.userByIdData?.profile?.TapPrivacyShowGender && (
           <CustomText
             preset={{
-              text: `Gender: ${props.userPreferences?.Gender}`,
+              text: `Gender: ${props.userByIdData?.gender}`,
               color: TapAppColors.black,
               fontSize: 19,
               fontWeight: "medium",
             }}
           />
-        )} */}
+        )}
 
-        {props.userPreferences?.TapPrivacyShowCurrentLocation && (
+        {props.userByIdData?.profile?.TapPrivacyShowCurrentLocation && (
           <View style={styles.rowView}>
             {/* <FontAwesome5 name="home" size={25} color={TapAppColors.black} /> */}
             <CustomText
               preset={{
-                text: props.userPreferences?.Addresses?.[0]?.Country as string,
+                text: props.userByIdData?.profile?.CurLocation
+                  ?.TapProfileCountryName,
                 color: TapAppColors.black,
                 fontSize: 20,
                 fontWeight: "semiBold",
@@ -88,7 +88,7 @@ const ProfilePreview = (props: IProps) => {
             />
           </View>
         )}
-        {props.userPreferences?.TapPrivacyShowDistance && (
+        {props.userByIdData?.profile?.TapPrivacyShowDistance && (
           <View style={styles.rowView}>
             {/* <FontAwesome5 name="home" size={25} color={TapAppColors.black} /> */}
             {/* <CustomText
@@ -139,7 +139,7 @@ const ProfilePreview = (props: IProps) => {
           <RenderPreferences
             isDisplayMode={true}
             allowedValues={props.allowedValues}
-            preferences={props.userPreferences}
+            preferences={props.userByIdData?.profile}
           />
         </View>
       </ScrollView>
