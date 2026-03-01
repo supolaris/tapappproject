@@ -1,6 +1,4 @@
-import { ICurrentUser } from "../@types/apiInterfaces/commonInterface";
 import { ApiNames } from "../constants/ApiNames";
-import { GetRequest } from "./FetchApis";
 import { getRequest, postRequest } from "./ReactQueryRequests";
 
 let tempEmail = "msulaman061@gmail.com";
@@ -18,9 +16,9 @@ export const useAddUserInteraction = () => {
   return response;
 };
 
-export const getCurrentUserService = async () => {
-  const { data: response }: { data: ICurrentUser } = await GetRequest(
-    ApiNames.home.getCurrentUserInfo,
+export const useGetCurrentUserService = () => {
+  const response = getRequest(
+    `${process.env.EXPO_PUBLIC_API_VERSION}${ApiNames.home.getCurrentUserInfo}`,
   );
   return response;
 };

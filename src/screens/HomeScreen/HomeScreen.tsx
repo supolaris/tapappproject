@@ -1,5 +1,7 @@
+import { UserContext } from "@/src/context/Context";
 import {
   useAddUserInteraction,
+  useGetCurrentUserService,
   useGetMatchedProfilesService,
 } from "@/src/services/HomeServices";
 import { useRouter } from "expo-router";
@@ -15,9 +17,13 @@ export function HomeScreen() {
   const router = useRouter();
   const [isHomeSwipePopupVisible, setIsHomeSwipePopupVisible] =
     useState<boolean>(false);
+  const { updateCurrentUserCtx } = UserContext();
 
   const homeUsersResponse = useGetMatchedProfilesService();
   const homeUserInteractionResponse = useAddUserInteraction();
+  const getCurrentUserResponse = useGetCurrentUserService();
+
+  updateCurrentUserCtx(getCurrentUserResponse?.data);
 
   const swipeAction = () => {
     const interval = setInterval(() => {

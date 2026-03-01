@@ -101,7 +101,7 @@ apiClient.interceptors.request.use(
     if (config.data) {
       console.log(`Body:`, JSON.stringify(config.data, null, 2));
     }
-    console.log(`Has Token: ${!!token}`);
+    console.log(`Token: ${token || "No token"}`);
     console.log("====================\n");
 
     return config;

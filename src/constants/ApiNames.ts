@@ -10,7 +10,7 @@ export const ApiNames = {
 
   //home
   home: {
-    getCurrentUserInfo: "v3/users",
+    getCurrentUserInfo: "users",
   },
   likes: {
     getSentLikes: "users/signals",

@@ -7,6 +7,8 @@ export const UserInfoScreen = () => {
   const { currentUserCtx } = UserContext();
   const [profileProgress, setProfileProgress] = useState(0.4);
 
+  console.log("currentUserCtx =>>>>>>>", currentUserCtx);
+
   const onHeaderHeartPressed = () => {
     router.push("/(app)/matchPreferences.router");
   };

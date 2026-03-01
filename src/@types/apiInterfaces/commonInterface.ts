@@ -59,6 +59,7 @@ export interface ICurrentUser {
   User: IUser;
   UserInfo: IUserInfo;
   UserRoles: IUserRoles;
+  UserInfoComplete: boolean;
 }
 
 export interface IUser extends ICreatedUpdatesAt {
