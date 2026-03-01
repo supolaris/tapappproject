@@ -98,9 +98,33 @@
 //   );
 // };
 
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React from "react";
 import Login from "./Login";
 
+GoogleSignin.configure({
+  webClientId:
+    "177866303276-ibika99t7ac5bikjsfe60arsqabcjnip.apps.googleusercontent.com",
+  // offlineAccess: true,
+  // forceCodeForRefreshToken: true,
+});
+
 export const LoginScreen = () => {
-  return <Login />;
+  const onGoogleLoginPressed = async () => {
+    try {
+      console.log("first");
+      const response = await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+
+      const signInResponse = await GoogleSignin.signIn();
+
+      console.log("response", response);
+      console.log("signInResponse", signInResponse);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  return <Login onGoogleLoginPressed={onGoogleLoginPressed} />;
 };

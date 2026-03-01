@@ -9,11 +9,13 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "googleServicesFile": "./googleServices/GoogleService-Info.plist",
       "bundleIdentifier": "com.tappmate.tapapp",
       "supportsTablet": true
     },
     "android": {
       "package": "com.tappmate.tapapp",
+      "googleServicesFile": "./googleServices/google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -40,7 +42,10 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true,

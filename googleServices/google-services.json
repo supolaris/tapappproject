@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "177866303276",
+    "project_id": "tapapp-374501",
+    "storage_bucket": "tapapp-374501.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177866303276:android:11c9a28fd9c54fb803ee89",
+        "android_client_info": {
+          "package_name": "com.tappmate.tapapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177866303276-bk3nnrlm32lc6df01tmet87uhbgqu0q6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tappmate.tapapp",
+            "certificate_hash": "4d549a2070637f40aeb04936b79e1979e531855b"
+          }
+        },
+        {
+          "client_id": "177866303276-r1tntn8g6q6h6sc9p2q4iimagjtvnhnv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tappmate.tapapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "177866303276-ibika99t7ac5bikjsfe60arsqabcjnip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA34ea1YdHEeGMXRF90qGbdGT7txX_f0Ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177866303276-ibika99t7ac5bikjsfe60arsqabcjnip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
