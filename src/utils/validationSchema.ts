@@ -12,3 +12,12 @@ export const billingValidationSchema = yup.object().shape({
   BillingState: yup.string().required("Billing state is required"),
   BillingPincode: yup.string().required("Billing pin code is required"),
 });
+
+export const deleteUserValidationSchema = yup.object().shape({
+  Email: yup
+    .string()
+    .email("Invalid email")
+    .required("Email is required")
+    .transform((val) => val.toLowerCase())
+    .lowercase(),
+});

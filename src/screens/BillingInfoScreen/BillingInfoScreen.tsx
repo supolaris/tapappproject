@@ -1,16 +1,15 @@
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 // import { useAppNavigation } from "../../@types/AppNavigation";
 import {
   useDeleteUser,
   useGetUserInfo,
+  useUpdateBillingInfo,
 } from "@/src/services/BillingInfoServices";
 import { ICountriesData } from "../../@types/CommonTypes";
 import { AppMessages } from "../../constants/AppMessages";
 import { countriesData } from "../../constants/StaticData";
 import { UserContext } from "../../context/Context";
-import { UpdateProfileDetail } from "../../services/ProfileDetailServices";
-import { MMKVStorage, simpleToast } from "../../utils/CommonFunctions";
+import { logoutUser, MMKVStorage } from "../../utils/CommonFunctions";
 import BillingInfo from "./BillingInfo";
 
 interface IFormValues {
@@ -31,11 +30,10 @@ export const BillingInfoScreen = () => {
 
   const userInfoResponse = useGetUserInfo();
   const deleteUserResponse = useDeleteUser();
-  // const updateBillingInfoResponse = useUpdateBillingInfo();
+  const updateBillingInfoResponse = useUpdateBillingInfo();
 
   const { currentUserCtx, updateCurrentUserCtx } = UserContext();
   const { isInternetConnected } = UserContext();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmailRequired, setIsEmailRequired] = useState<boolean>(false);
   const [emailMessage, setEmailMessage] = useState<string>("");
 
@@ -84,6 +82,8 @@ export const BillingInfoScreen = () => {
 
   const onDeleteModalRequestClose = () => {
     setIsDeleteModalVisible(false);
+
+    console.log("first");
   };
 
   const onProfileDeletePressed = () => {
@@ -108,12 +108,7 @@ export const BillingInfoScreen = () => {
     deleteUserResponse.mutate(undefined, {
       onSuccess: (response) => {
         if (response?.status === 200) {
-          MMKVStorage.removeItem("UserEmail");
-          MMKVStorage.removeItem("UserName");
-          MMKVStorage.removeItem("UserImage");
-          MMKVStorage.removeItem("FirebaseToken");
-
-          global.token = "";
+          logoutUser();
           // navigation.navigate("WalkthroughScreen");
         }
         setPopupInput("");
@@ -160,48 +155,41 @@ export const BillingInfoScreen = () => {
   };
 
   const handleSavePress = async (values: IFormValues) => {
-    if (isInternetConnected) {
-      try {
-        setIsLoading(true);
+    updateBillingInfoResponse?.mutate(values, {
+      onSuccess: (res) => {
+        updateCurrentUserCtx({
+          User: currentUserCtx.User,
+          UserInfo: {
+            ...currentUserCtx.UserInfo,
+            FirstName: values.FirstName,
+            MiddleName: values.MiddleName,
+            LastName: values.LastName,
+            DOB: values.DOB,
+            Addresses: [
+              {
+                ...currentUserCtx.UserInfo?.Addresses?.[0],
+                AddressLine1: values.BillingAddress1,
+                AddressLine2: values.BillingAddress2,
+                City: values.BillingCity,
+                State: values.BillingState,
+                PostCode: values.BillingPincode,
+                Country: values.Country,
+              } as any,
+            ],
+          },
+          UserRoles: currentUserCtx.UserRoles,
+          UserInfoComplete: currentUserCtx.UserInfoComplete ?? false,
+        });
 
-        const response = await UpdateProfileDetail(values);
-
-        if (response.status === 200) {
-          updateCurrentUserCtx({
-            ...currentUserCtx,
-            UserInfo: {
-              ...currentUserCtx.UserInfo,
-              FirstName: values.FirstName,
-              MiddleName: values.MiddleName,
-              LastName: values.LastName,
-              DOB: values.DOB,
-              Addresses: [
-                {
-                  ...currentUserCtx.UserInfo?.Addresses?.[0],
-                  AddressLine1: values.BillingAddress1,
-                  AddressLine2: values.BillingAddress2,
-                  City: values.BillingCity,
-                  State: values.BillingState,
-                  PostCode: values.BillingPincode,
-                  Country: values.Country,
-                } as any,
-              ],
-            },
-          });
-
-          setIsLoading(false);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.log("error", error);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      console.log("else entered internet");
-      simpleToast(AppMessages.noInternet);
-    }
+        console.log(
+          "updated currentUserCtx =>>>",
+          JSON.stringify(currentUserCtx),
+        );
+      },
+      onError: (err: any) => {
+        console.log("billing info save error =>>>>", err);
+      },
+    });
   };
 
   const initialFormValues: IFormValues = {
@@ -210,8 +198,10 @@ export const BillingInfoScreen = () => {
     LastName: currentUserCtx?.UserInfo?.LastName || "",
     DOB: currentUserCtx?.UserInfo?.DOB || "",
     Country: currentUserCtx?.UserInfo?.Addresses?.[0]?.Country || "",
-    BillingAddress1: currentUserCtx?.UserInfo?.Addresses?.[0]?.AddressLine1 || "",
-    BillingAddress2: currentUserCtx?.UserInfo?.Addresses?.[0]?.AddressLine2 || "",
+    BillingAddress1:
+      currentUserCtx?.UserInfo?.Addresses?.[0]?.AddressLine1 || "",
+    BillingAddress2:
+      currentUserCtx?.UserInfo?.Addresses?.[0]?.AddressLine2 || "",
     BillingCity: currentUserCtx?.UserInfo?.Addresses?.[0]?.City || "",
     BillingState: currentUserCtx?.UserInfo?.Addresses?.[0]?.State || "",
     BillingPincode: currentUserCtx?.UserInfo?.Addresses?.[0]?.PostCode || "",
@@ -225,7 +215,7 @@ export const BillingInfoScreen = () => {
       // Existing props for non-form functionality
       emailMessage={emailMessage}
       isEmailRequired={isEmailRequired}
-      isLoading={isLoading}
+      isLoading={updateBillingInfoResponse?.isPending}
       userNameEmail={userNameEmail}
       isDeleteModalVisible={isDeleteModalVisible}
       popupInput={popupInput}

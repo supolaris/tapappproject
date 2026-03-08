@@ -1,5 +1,5 @@
 import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AxiosError } from "axios";
 import moment from "moment";
 import { Dimensions, PixelRatio, Platform } from "react-native";
@@ -68,7 +68,7 @@ export const normalizeFont = (size: number) => {
   return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 1;
 };
 
-export const clearLogoutData = async () => {
+export const logoutUser = async () => {
   try {
     await auth().signOut();
     await GoogleSignin.revokeAccess();
@@ -111,7 +111,7 @@ export const isMyProfileItemSelected = (
   let valuesArray: string[] = [];
   if (Array.isArray(selectedValues)) {
     valuesArray = selectedValues.map(String);
-  } else if (selectedValues && typeof selectedValues === 'string') {
+  } else if (selectedValues && typeof selectedValues === "string") {
     valuesArray = selectedValues.split(",").map((val) => val.trim());
   }
   return valuesArray.includes(item);
@@ -128,7 +128,7 @@ export const getMyProfileSelectedValuesForSection = (
   if (Array.isArray(selected)) {
     return selected.map(String);
   }
-  return selected && typeof selected === 'string'
+  return selected && typeof selected === "string"
     ? selected.split(",").map((val) => val.trim())
     : [];
 };
@@ -148,7 +148,7 @@ export const isMatchItemSelected = (
   let valuesArray: string[] = [];
   if (Array.isArray(selectedValues)) {
     valuesArray = selectedValues.map(String);
-  } else if (selectedValues && typeof selectedValues === 'string') {
+  } else if (selectedValues && typeof selectedValues === "string") {
     valuesArray = selectedValues.split(",").map((val) => val.trim());
   }
   return valuesArray.includes(item);
@@ -165,7 +165,7 @@ export const getMatchSelectedValuesForSection = (
   if (Array.isArray(selected)) {
     return selected.map(String);
   }
-  return selected && typeof selected === 'string'
+  return selected && typeof selected === "string"
     ? selected.split(",").map((val) => val.trim())
     : [];
 };

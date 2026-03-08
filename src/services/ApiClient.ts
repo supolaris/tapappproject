@@ -2,7 +2,7 @@ import auth from "@react-native-firebase/auth";
 import axios from "axios";
 import { requestTimeout } from "../constants/AppConstants";
 import { AppMessages } from "../constants/AppMessages";
-import { clearLogoutData, simpleToast } from "../utils/CommonFunctions";
+import { logoutUser, MMKVStorage, simpleToast } from "../utils/CommonFunctions";
 
 let isInternetConnected = true;
 
@@ -56,7 +56,7 @@ const refreshAuthToken = async (): Promise<string> => {
 
 // Handle logout on failed refresh
 const handleAuthFailure = () => {
-  clearLogoutData();
+  logoutUser();
 
   // Show toast message
   simpleToast("Session expired, please log in again");

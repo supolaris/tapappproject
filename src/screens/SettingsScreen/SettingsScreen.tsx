@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-// import { clearLogoutData } from "../../utils/CommonFunctions";
+// import { logoutUser } from "../../utils/CommonFunctions";
 import { router } from "expo-router";
 import Settings from "./Settings";
 
@@ -21,7 +21,7 @@ export const SettingsScreen = () => {
   const onLogOutPressed = async () => {
     try {
       setIsLoading(true);
-      const isDataCleared = await clearLogoutData();
+      const isDataCleared = await logoutUser();
       if (isDataCleared) {
         navigation.replace("WalkthroughScreen");
       }

@@ -1,7 +1,7 @@
 import { deleteRequest, getRequest, putRequest } from "./ReactQueryRequests";
 
 export const useGetUserInfo = () => {
-  const response = getRequest(`${process.env.EXPO_PUBLIC_API_VERSION}users`);
+  const response = getRequest(`${process.env.EXPO_PUBLIC_API_VERSION}/users`);
   return response;
 };
 

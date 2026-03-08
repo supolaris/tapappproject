@@ -1,29 +1,29 @@
-import {ReactNode, createContext, useState, useContext} from 'react';
+import { ReactNode, createContext, useContext, useState } from "react";
 import {
-  ICurrentUser,
   IAllowedValues,
+  ICurrentUser,
   IMyImagesData,
-} from '../@types/apiInterfaces/commonInterface';
-import {IMatchPreferences} from '../@types/apiInterfaces/MatchPreferencesInterface';
-import {IMyProfilePreferences} from '../@types/apiInterfaces/MyProfilePreferencesInterface';
+} from "../@types/apiInterfaces/commonInterface";
+import { IMatchPreferences } from "../@types/apiInterfaces/MatchPreferencesInterface";
+import { IMyProfilePreferences } from "../@types/apiInterfaces/MyProfilePreferencesInterface";
 
 export interface ContextType {
   myImagesCtx: IMyImagesData[];
-  updateMyImagesCtx: (data: ContextType['myImagesCtx']) => void;
+  updateMyImagesCtx: (data: ContextType["myImagesCtx"]) => void;
   currentUserCtx: ICurrentUser;
-  updateCurrentUserCtx: (data: ContextType['currentUserCtx']) => void;
+  updateCurrentUserCtx: (data: ContextType["currentUserCtx"]) => void;
   isInternetConnected: boolean | null;
   updateIsInternetConnected: (
-    value: ContextType['isInternetConnected'],
+    value: ContextType["isInternetConnected"],
   ) => void;
   allowedValuesCtx: IAllowedValues[];
-  updateAllowedCtx: (data: ContextType['allowedValuesCtx']) => void;
+  updateAllowedCtx: (data: ContextType["allowedValuesCtx"]) => void;
   myProfilePreferencesCtx: IMyProfilePreferences;
   updateMyProfilePreferencesCtx: (
-    data: ContextType['myProfilePreferencesCtx'],
+    data: ContextType["myProfilePreferencesCtx"],
   ) => void;
   matchPreferencesCtx: IMatchPreferences;
-  updateMatchPreferencesCtx: (data: ContextType['matchPreferencesCtx']) => void;
+  updateMatchPreferencesCtx: (data: ContextType["matchPreferencesCtx"]) => void;
 }
 const initialContextValue: ContextType = {
   myImagesCtx: [],
@@ -33,176 +33,176 @@ const initialContextValue: ContextType = {
   currentUserCtx: {
     User: {
       ID: -1,
-      CreatedAt: '',
-      UpdatedAt: '',
+      CreatedAt: "",
+      UpdatedAt: "",
       DeletedAt: null,
-      Login: '',
-      UserFirstName: '',
-      UserLastName: '',
-      UserExternalID: '',
-      UserExternalSystem: '',
+      Login: "",
+      UserFirstName: "",
+      UserLastName: "",
+      UserExternalID: "",
+      UserExternalSystem: "",
       PersonID: -1,
-      UserExternalPicURL: '',
-      LastLogin: '',
-      LastLoginCountry: '',
-      LastLoginCity: '',
-      LastLoginIP: '',
+      UserExternalPicURL: "",
+      LastLogin: "",
+      LastLoginCountry: "",
+      LastLoginCity: "",
+      LastLoginIP: "",
     },
     UserInfo: {
       ID: -1,
-      CreatedAt: '',
-      UpdatedAt: '',
+      CreatedAt: "",
+      UpdatedAt: "",
       DeletedAt: null,
-      Name: '',
-      FirstName: '',
-      MiddleName: '',
-      LastName: '',
-      Gender: '',
-      DOB: '',
-      Language: '',
+      Name: "",
+      FirstName: "",
+      MiddleName: "",
+      LastName: "",
+      Gender: "",
+      DOB: "",
+      Language: "",
       // Country: '',
-      TimeZone: '',
+      TimeZone: "",
       Addresses: null,
       ContactInfo: null,
       UserInfoID: -1,
-      profile_type: '',
+      profile_type: "",
       HeightFeet: -1,
       HeightInches: -1,
     },
     UserRoles: {
       UserRoleList: null,
-      LastGranted: '',
+      LastGranted: "",
     },
   },
   updateCurrentUserCtx: () => {},
   myProfilePreferencesCtx: {
     // TapLanguages: [],
-    TapLifestylePets: '',
+    TapLifestylePets: "",
     TapPrivacyShowAge: false,
-    TapLifestyleOpenTo: '',
-    TapPersonalityType: '',
-    TapLifestyleSmoking: '',
-    TapLifestyleWorkout: '',
-    TapLanguagesLanguage: '',
-    TapPersonalityTrait: '',
-    TapLifestyleDrinking: '',
-    TapLifestyleCannabis: '',
-    TapDiscoveryLocation: '',
-    TapProfessionalSchool: '',
-    TapGoingOutSocialVibe: '',
-    TapGoingOutDressStyle: '',
+    TapLifestyleOpenTo: "",
+    TapPersonalityType: "",
+    TapLifestyleSmoking: "",
+    TapLifestyleWorkout: "",
+    TapLanguagesLanguage: "",
+    TapPersonalityTrait: "",
+    TapLifestyleDrinking: "",
+    TapLifestyleCannabis: "",
+    TapDiscoveryLocation: "",
+    TapProfessionalSchool: "",
+    TapGoingOutSocialVibe: "",
+    TapGoingOutDressStyle: "",
     TapPrivacyShowGender: false,
-    TapLifestyleLifestyle: '',
-    TapCurLocationLivingIn: '',
-    TapProfessionalCompany: '',
-    TapLifestyleLookingFor: '',
-    TapPersonalityLoveStyle: '',
-    TapProfessionalLanguage: '',
-    TapProfessionalJobTitle: '',
-    TapLifestyleSocialMedia: '',
-    TapMyWeekendsPaceEnergy: '',
-    TapMyWeekendsActivities: '',
+    TapLifestyleLifestyle: "",
+    TapCurLocationLivingIn: "",
+    TapProfessionalCompany: "",
+    TapLifestyleLookingFor: "",
+    TapPersonalityLoveStyle: "",
+    TapProfessionalLanguage: "",
+    TapProfessionalJobTitle: "",
+    TapLifestyleSocialMedia: "",
+    TapMyWeekendsPaceEnergy: "",
+    TapMyWeekendsActivities: "",
     TapPrivacyShowDistance: false,
-    TapPersonalDetailsGender: '',
-    TapPersonalDetailsZodiac: '',
-    TapPersonalDetailsOpenTo: '',
-    TapMyWeekendsSocialEnergy: '',
-    TapMyWeekendsSocialHabits: '',
-    TapPersonalDetailsAboutMe: '',
-    TapLifestyleSleepingHabits: '',
-    TapPersonalityLoveLanguage: '',
+    TapPersonalDetailsGender: "",
+    TapPersonalDetailsZodiac: "",
+    TapPersonalDetailsOpenTo: "",
+    TapMyWeekendsSocialEnergy: "",
+    TapMyWeekendsSocialHabits: "",
+    TapPersonalDetailsAboutMe: "",
+    TapLifestyleSleepingHabits: "",
+    TapPersonalityLoveLanguage: "",
     TapPrivacyShowSmartPhotos: false,
-    TapPersonalDetailsInterests: '',
-    TapPersonalDetailsEducation: '',
-    TapLifestyleWorkoutFrequency: '',
-    TapPersonalDetailsLookingFor: '',
-    TapPersonalDetailsFamilyPlans: '',
-    TapLifestyleDietaryPreference: '',
-    TapGoingOutPreferredActivities: '',
+    TapPersonalDetailsInterests: "",
+    TapPersonalDetailsEducation: "",
+    TapLifestyleWorkoutFrequency: "",
+    TapPersonalDetailsLookingFor: "",
+    TapPersonalDetailsFamilyPlans: "",
+    TapLifestyleDietaryPreference: "",
+    TapGoingOutPreferredActivities: "",
     TapPrivacyShowCurrentLocation: false,
-    TapPersonalityCommunicationStyle: '',
+    TapPersonalityCommunicationStyle: "",
     // TapHealthAndWellnessCovidVaccine: false,
-    TapPersonalDetailsSexualOrientation: '',
-    TapPersonalDetailsRelationshipGoals: '',
-    TapMusicAndEntertainmentSpotifyAnthem: '',
-    TapMyCommunicationStyleResponsiveness: '',
-    TapMyCommunicationStylePhoneUsageHabits: '',
-    TapMusicAndEntertainmentTopSpotifyArtists: '',
-    TapMyCommunicationStylePreferredCommunicationMethod: '',
+    TapPersonalDetailsSexualOrientation: "",
+    TapPersonalDetailsRelationshipGoals: "",
+    TapMusicAndEntertainmentSpotifyAnthem: "",
+    TapMyCommunicationStyleResponsiveness: "",
+    TapMyCommunicationStylePhoneUsageHabits: "",
+    TapMusicAndEntertainmentTopSpotifyArtists: "",
+    TapMyCommunicationStylePreferredCommunicationMethod: "",
     CurLocation: {
       TapProfilelng: 0,
       TapProfilelat: 0,
       tap_profile_id: 0,
-      TapProfileAreaName: '',
-      TapProfileCityName: '',
-      TapProfileCountryName: '',
-      TapProfileCountryCode: '',
+      TapProfileAreaName: "",
+      TapProfileCityName: "",
+      TapProfileCountryName: "",
+      TapProfileCountryCode: "",
     },
     images: [],
   },
   updateMyProfilePreferencesCtx: () => {},
   matchPreferencesCtx: {
     // TapLanguages: [],
-    TapLifestylePets: '',
-    TapLifestyleOpenTo: '',
-    TapPersonalityType: '',
-    TapLifestyleSmoking: '',
-    TapLifestyleWorkout: '',
-    TapLanguagesLanguage: '',
-    TapPersonalityTrait: '',
-    TapLifestyleDrinking: '',
-    TapLifestyleCannabis: '',
-    TapDiscoveryLocation: '',
+    TapLifestylePets: "",
+    TapLifestyleOpenTo: "",
+    TapPersonalityType: "",
+    TapLifestyleSmoking: "",
+    TapLifestyleWorkout: "",
+    TapLanguagesLanguage: "",
+    TapPersonalityTrait: "",
+    TapLifestyleDrinking: "",
+    TapLifestyleCannabis: "",
+    TapDiscoveryLocation: "",
     TapDiscoveryHasABio: false,
-    TapProfessionalSchool: '',
-    TapGoingOutSocialVibe: '',
-    TapGoingOutDressStyle: '',
-    TapLifestyleLifestyle: '',
-    TapCurLocationLivingIn: '',
-    TapProfessionalCompany: '',
-    TapLifestyleLookingFor: '',
-    TapPersonalityLoveStyle: '',
-    TapProfessionalLanguage: '',
-    TapProfessionalJobTitle: '',
-    TapLifestyleSocialMedia: '',
-    TapMyWeekendsPaceEnergy: '',
-    TapMyWeekendsActivities: '',
-    TapPersonalDetailsGender: '',
-    TapPersonalDetailsZodiac: '',
-    TapPersonalDetailsOpenTo: '',
-    TapMyWeekendsSocialEnergy: '',
-    TapMyWeekendsSocialHabits: '',
-    TapPersonalDetailsAboutMe: '',
-    TapLifestyleSleepingHabits: '',
-    TapPersonalityLoveLanguage: '',
-    TapPersonalDetailsInterests: '',
-    TapPersonalDetailsEducation: '',
+    TapProfessionalSchool: "",
+    TapGoingOutSocialVibe: "",
+    TapGoingOutDressStyle: "",
+    TapLifestyleLifestyle: "",
+    TapCurLocationLivingIn: "",
+    TapProfessionalCompany: "",
+    TapLifestyleLookingFor: "",
+    TapPersonalityLoveStyle: "",
+    TapProfessionalLanguage: "",
+    TapProfessionalJobTitle: "",
+    TapLifestyleSocialMedia: "",
+    TapMyWeekendsPaceEnergy: "",
+    TapMyWeekendsActivities: "",
+    TapPersonalDetailsGender: "",
+    TapPersonalDetailsZodiac: "",
+    TapPersonalDetailsOpenTo: "",
+    TapMyWeekendsSocialEnergy: "",
+    TapMyWeekendsSocialHabits: "",
+    TapPersonalDetailsAboutMe: "",
+    TapLifestyleSleepingHabits: "",
+    TapPersonalityLoveLanguage: "",
+    TapPersonalDetailsInterests: "",
+    TapPersonalDetailsEducation: "",
     TapDiscoveryMaximumDistance: 0,
     TapDiscoveryAgeRangeMinimum: 0,
     TapDiscoveryAgeRangeMaximum: 0,
-    TapLifestyleWorkoutFrequency: '',
-    TapPersonalDetailsLookingFor: '',
-    TapPersonalDetailsFamilyPlans: '',
+    TapLifestyleWorkoutFrequency: "",
+    TapPersonalDetailsLookingFor: "",
+    TapPersonalDetailsFamilyPlans: "",
     TapDiscoveryMaxNumberOfPhotos: 0,
-    TapLifestyleDietaryPreference: '',
-    TapGoingOutPreferredActivities: '',
-    TapPersonalityCommunicationStyle: '',
+    TapLifestyleDietaryPreference: "",
+    TapGoingOutPreferredActivities: "",
+    TapPersonalityCommunicationStyle: "",
     // TapHealthAndWellnessCovidVaccine: false,
-    TapPersonalDetailsSexualOrientation: '',
-    TapPersonalDetailsRelationshipGoals: '',
-    TapMusicAndEntertainmentSpotifyAnthem: '',
-    TapMyCommunicationStyleResponsiveness: '',
-    TapMyCommunicationStylePhoneUsageHabits: '',
-    TapMusicAndEntertainmentTopSpotifyArtists: '',
-    TapMyCommunicationStylePreferredCommunicationMethod: '',
+    TapPersonalDetailsSexualOrientation: "",
+    TapPersonalDetailsRelationshipGoals: "",
+    TapMusicAndEntertainmentSpotifyAnthem: "",
+    TapMyCommunicationStyleResponsiveness: "",
+    TapMyCommunicationStylePhoneUsageHabits: "",
+    TapMusicAndEntertainmentTopSpotifyArtists: "",
+    TapMyCommunicationStylePreferredCommunicationMethod: "",
     CurLocation: {
       TapProfilelng: 0,
       TapProfilelat: 0,
       tap_profile_id: 0,
-      TapProfileAreaName: '',
-      TapProfileCityName: '',
-      TapProfileCountryName: '',
-      TapProfileCountryCode: '',
+      TapProfileAreaName: "",
+      TapProfileCityName: "",
+      TapProfileCountryName: "",
+      TapProfileCountryCode: "",
     },
   },
   updateMatchPreferencesCtx: () => {},
@@ -211,53 +211,57 @@ const initialContextValue: ContextType = {
 };
 
 const userContext = createContext<ContextType>(initialContextValue);
-export const UserProvider: React.FC<{children: ReactNode}> = ({children}) => {
-  const [myImagesCtx, setMyImagesCtx] = useState<ContextType['myImagesCtx']>(
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [myImagesCtx, setMyImagesCtx] = useState<ContextType["myImagesCtx"]>(
     initialContextValue.myImagesCtx,
   );
 
-  const updateMyImagesCtx = (state: ContextType['myImagesCtx']) => {
+  const updateMyImagesCtx = (state: ContextType["myImagesCtx"]) => {
     setMyImagesCtx(state);
   };
 
   const [isInternetConnected, setIsInternetConnected] = useState<
-    ContextType['isInternetConnected']
+    ContextType["isInternetConnected"]
   >(initialContextValue.isInternetConnected);
 
   const updateIsInternetConnected = (
-    state: ContextType['isInternetConnected'],
+    state: ContextType["isInternetConnected"],
   ) => {
     setIsInternetConnected(state);
   };
 
-  const [currentUserCtx, setUserData] = useState<ContextType['currentUserCtx']>(
+  const [currentUserCtx, setUserData] = useState<ContextType["currentUserCtx"]>(
     initialContextValue.currentUserCtx,
   );
-  const updateCurrentUserCtx = (data: ContextType['currentUserCtx']) => {
+  const updateCurrentUserCtx = (data: ContextType["currentUserCtx"]) => {
+    console.log("data", data);
+
     setUserData(data);
   };
 
   const [allowedValuesCtx, setAllowedValuesData] = useState<
-    ContextType['allowedValuesCtx']
+    ContextType["allowedValuesCtx"]
   >(initialContextValue.allowedValuesCtx);
-  const updateAllowedCtx = (data: ContextType['allowedValuesCtx']) => {
+  const updateAllowedCtx = (data: ContextType["allowedValuesCtx"]) => {
     setAllowedValuesData(data);
   };
 
   const [myProfilePreferencesCtx, setMyProfilePreferences] = useState<
-    ContextType['myProfilePreferencesCtx']
+    ContextType["myProfilePreferencesCtx"]
   >(initialContextValue.myProfilePreferencesCtx);
   const updateMyProfilePreferencesCtx = (
-    data: ContextType['myProfilePreferencesCtx'],
+    data: ContextType["myProfilePreferencesCtx"],
   ) => {
     setMyProfilePreferences(data);
   };
 
   const [matchPreferencesCtx, setMatchPreferences] = useState<
-    ContextType['matchPreferencesCtx']
+    ContextType["matchPreferencesCtx"]
   >(initialContextValue.matchPreferencesCtx);
   const updateMatchPreferencesCtx = (
-    data: ContextType['matchPreferencesCtx'],
+    data: ContextType["matchPreferencesCtx"],
   ) => {
     setMatchPreferences(data);
   };
@@ -277,7 +281,8 @@ export const UserProvider: React.FC<{children: ReactNode}> = ({children}) => {
         updateIsInternetConnected,
         myProfilePreferencesCtx,
         updateMyProfilePreferencesCtx,
-      }}>
+      }}
+    >
       {children}
     </userContext.Provider>
   );

@@ -1,4 +1,5 @@
 export const ApiNames = {
+  ApiGroup: "v3",
   DeleteUser: "v3/users",
   ProvisionUser: "v3/users",
   GetMyProfileData: "v3/users",

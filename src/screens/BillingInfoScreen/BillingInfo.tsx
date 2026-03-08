@@ -102,13 +102,13 @@ const BillingInfoForm = (props: {
         maximumDate={moment().subtract(18, "years").toDate()}
       /> */}
       <ProfileDeletePopup
-        emailMessage={parentProps.emailMessage}
-        isEmailRequired={parentProps.isEmailRequired}
-        email={parentProps.userNameEmail?.email}
-        isModalVisible={parentProps.isDeleteModalVisible}
         popupInput={parentProps.popupInput}
-        popupInputChangeText={parentProps.popupInputChangeText}
+        emailMessage={parentProps.emailMessage}
+        email={parentProps.userNameEmail?.email}
+        isEmailRequired={parentProps.isEmailRequired}
+        isModalVisible={parentProps.isDeleteModalVisible}
         onRequestClose={parentProps.onDeleteModalRequestClose}
+        popupInputChangeText={parentProps.popupInputChangeText}
         onConfirmDeletePressed={parentProps.onConfirmDeletePressed}
       />
       <SearchValuePopup

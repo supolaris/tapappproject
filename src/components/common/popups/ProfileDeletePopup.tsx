@@ -1,28 +1,21 @@
 import Entypo from "@expo/vector-icons/Entypo";
-import React, { memo } from "react";
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Formik } from "formik";
+import React from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { TapAppColors } from "../../../constants/TapAppColors";
-import ErrorText from "../ErrorText";
-// import Gradient from "../Gradient";
+import { deleteUserValidationSchema } from "../../../utils/validationSchema";
 import PrimaryButton from "../buttons/PrimaryButton";
+import FormikSecondaryTextInput from "../textInputs/FormikSecondaryTextInput";
 
 interface ProfileDeletePopupProps {
+  popupInput?: string;
+  emailMessage?: string;
   isModalVisible: boolean;
-  emailMessage: string;
+  isEmailRequired?: boolean;
   email: string | null | undefined;
-  popupInput: string;
-  isEmailRequired: boolean;
-  popupInputChangeText: (val: string) => void;
   onRequestClose: () => void;
   onConfirmDeletePressed: () => void;
+  popupInputChangeText?: (val: string) => void;
 }
 
 const ProfileDeletePopup = (props: ProfileDeletePopupProps) => {
@@ -32,21 +25,31 @@ const ProfileDeletePopup = (props: ProfileDeletePopupProps) => {
       visible={props.isModalVisible}
       onRequestClose={props.onRequestClose}
     >
-      <TouchableWithoutFeedback onPress={props.onRequestClose}>
-        <View style={styles.container}>
-          <TouchableWithoutFeedback>
-            <View style={styles.innerContainer}>
-              <View style={styles.headerView}>
-                <Text style={styles.headerTitleText}>Delete Profile</Text>
-                <TouchableOpacity
-                  onPress={props.onRequestClose}
-                  style={styles.crossTouchable}
-                >
-                  <Entypo name="cross" size={25} color={TapAppColors.white} />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.contentView}>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <View style={styles.headerView}>
+            <Text style={styles.headerTitleText}>Delete Profile</Text>
+            <TouchableOpacity
+              style={styles.crossTouchable}
+              onPress={props.onRequestClose}
+            >
+              <Entypo name="cross" size={25} color={TapAppColors.white} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentView}>
+            <Formik
+              initialValues={{
+                Email: "",
+              }}
+              validationSchema={deleteUserValidationSchema}
+              onSubmit={(values) => {
+                // Check if entered email matches the stored email
+                if (values.Email.toLowerCase() === props.email?.toLowerCase()) {
+                  props.onConfirmDeletePressed();
+                }
+              }}
+            >
+              {({ handleSubmit, values }) => (
                 <View>
                   <Text style={styles.titleText}>
                     Are you sure, you want to delete profile?
@@ -56,39 +59,26 @@ const ProfileDeletePopup = (props: ProfileDeletePopupProps) => {
                   </Text>
                   <Text style={styles.emailText}>{props.email}</Text>
 
-                  {/* <Gradient
-                    borderColor={
-                      props.isEmailRequired ? "red" : TapAppColors.white
-                    }
-                  > */}
-                  <TextInput
-                    value={props.popupInput}
-                    onChangeText={(val: string) =>
-                      props.popupInputChangeText(val)
-                    }
-                    placeholder="example@example.com"
-                    placeholderTextColor={TapAppColors.primayGray}
-                    style={styles.textInput}
+                  <FormikSecondaryTextInput
+                    name="Email"
+                    label=""
+                    keyboardType="email-address"
                   />
-                  {/* </Gradient> */}
-                  <ErrorText text={props.emailMessage} />
+
+                  <View style={styles.confirmButton}>
+                    <PrimaryButton text="Confirm" onPress={handleSubmit} />
+                  </View>
                 </View>
-                <View style={styles.confirmButton}>
-                  <PrimaryButton
-                    text="Confirm"
-                    onPress={props.onConfirmDeletePressed}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
+              )}
+            </Formik>
+          </View>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </Modal>
   );
 };
 
-export default memo(ProfileDeletePopup);
+export default ProfileDeletePopup;
 
 const styles = StyleSheet.create({
   container: {
@@ -111,6 +101,7 @@ const styles = StyleSheet.create({
     borderColor: TapAppColors.primayGray,
     justifyContent: "center",
     backgroundColor: TapAppColors.black,
+    position: "relative",
   },
   headerTitleText: {
     fontSize: 15,
@@ -144,12 +135,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 30,
   },
-  textInput: {
-    color: TapAppColors.black,
-    height: 40,
-  },
   confirmButton: {
-    // width: '40%',
-    //alignSelf: 'center',
+    width: "40%",
+    alignSelf: "center",
   },
 });

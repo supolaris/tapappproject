@@ -27,7 +27,7 @@ export const patchRequest = (endPoint: string) => {
 
 export const putRequest = (endPoint: string) => {
   const response = useMutation({
-    mutationFn: async (data: any) => await apiClient.patch(`${endPoint}`, data),
+    mutationFn: async (data: any) => await apiClient.put(`${endPoint}`, data),
   });
 
   return response;

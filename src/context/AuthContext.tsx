@@ -1,13 +1,13 @@
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import {
-  ReactNode,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { clearLogoutData, MMKVStorage } from "../utils/CommonFunctions";
+import { logoutUser, MMKVStorage } from "../utils/CommonFunctions";
 
 interface AuthContextType {
   user: any | null;
@@ -102,7 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   // Sign out
   const signOut = async () => {
     try {
-      await clearLogoutData();
+      await logoutUser();
       setUser(null);
     } catch (error) {
       console.error("Sign out error:", error);
