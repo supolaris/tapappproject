@@ -60,7 +60,7 @@ const SearchValuePopup = (props: ISearchValuePopupProps) => {
               <View style={styles.inputView}>
                 {/* <Gradient borderColor=""> */}
                 <TextInput
-                  placeholderTextColor={TapAppColors.primayGray}
+                  placeholderTextColor={TapAppColors.primaryGray}
                   style={styles.textInput}
                   value={props.searchValuePopupInputVal}
                   onChangeText={(val: string) =>
@@ -90,7 +90,7 @@ export default SearchValuePopup;
 const styles = StyleSheet.create({
   renderContainer: {
     borderBottomWidth: 0.5,
-    borderColor: TapAppColors.primayGray,
+    borderColor: TapAppColors.primaryGray,
   },
   renderCountryTouchable: {
     paddingTop: 20,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: TapAppColors.primayGray,
+    borderColor: TapAppColors.primaryGray,
     justifyContent: "center",
   },
   headerTitleText: {
@@ -144,5 +144,6 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     color: TapAppColors.black,
+    backgroundColor: TapAppColors.white,
   },
 });

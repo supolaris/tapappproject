@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: TapAppColors.primayGray,
+    borderColor: TapAppColors.primaryGray,
     justifyContent: "center",
     backgroundColor: TapAppColors.black,
     position: "relative",

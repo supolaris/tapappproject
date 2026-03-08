@@ -63,7 +63,7 @@ const Likes = (props: ILikesProps) => {
                   color:
                     props.selectedLikesView === 0
                       ? TapAppColors.white
-                      : TapAppColors.primayGray,
+                      : TapAppColors.primaryGray,
                 },
               ]}
             >
@@ -92,7 +92,7 @@ const Likes = (props: ILikesProps) => {
                   color:
                     props.selectedLikesView === 1
                       ? TapAppColors.white
-                      : TapAppColors.primayGray,
+                      : TapAppColors.primaryGray,
                 },
               ]}
             >
@@ -113,7 +113,7 @@ const Likes = (props: ILikesProps) => {
                   color:
                     props.selectedLikesView === 2
                       ? TapAppColors.white
-                      : TapAppColors.primayGray,
+                      : TapAppColors.primaryGray,
                 },
               ]}
             >

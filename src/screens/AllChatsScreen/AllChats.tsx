@@ -1,30 +1,31 @@
-import React from 'react';
+import React from "react";
 import {
-  View,
-  Text,
-  Image,
   FlatList,
+  Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
-} from 'react-native';
-import {FontFamily} from '../../constants/FontFamily';
-import {MessageData} from '../../constants/StaticData';
-import {TapAppColors} from '../../constants/TapAppColors';
-import {activeOpacity} from '../../utils/CommonFunctions';
-import MainHeader from '../../components/common/headers/MainHeader';
+  View,
+} from "react-native";
+import MainHeader from "../../components/common/headers/MainHeader";
+import { FontFamily } from "../../constants/FontFamily";
+import { MessageData } from "../../constants/StaticData";
+import { TapAppColors } from "../../constants/TapAppColors";
+import { activeOpacity } from "../../utils/CommonFunctions";
 
 interface IAllChatsProps {
   onMessagePressed: () => void;
 }
 
 const AllChats = (props: IAllChatsProps) => {
-  const renderMessages = ({item}: {item: any}) => {
+  const renderMessages = ({ item }: { item: any }) => {
     return (
       <View style={styles.renderMessages}>
         <TouchableOpacity
           activeOpacity={activeOpacity}
           style={styles.renderDetail}
-          onPress={props.onMessagePressed}>
+          onPress={props.onMessagePressed}
+        >
           <View style={styles.renderImageView}>
             <Image
               resizeMode="stretch"
@@ -47,7 +48,8 @@ const AllChats = (props: IAllChatsProps) => {
 
         <TouchableOpacity
           activeOpacity={activeOpacity}
-          style={styles.renderTurnTouchable}>
+          style={styles.renderTurnTouchable}
+        >
           <Text style={styles.renderTurnTouchableText}>Your turn</Text>
         </TouchableOpacity>
       </View>
@@ -80,36 +82,36 @@ export default AllChats;
 
 const styles = StyleSheet.create({
   renderMessages: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 10,
   },
   renderDetail: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    width: '80%',
+    flexDirection: "row",
+    alignItems: "flex-start",
+    width: "80%",
   },
   renderImageView: {
-    width: '13%',
+    width: "13%",
     marginRight: 10,
     marginTop: 5,
   },
   renderImage: {
     height: 40,
     width: 40,
-    backgroundColor: TapAppColors.primayGray,
+    backgroundColor: TapAppColors.primaryGray,
     borderRadius: 100,
   },
   renderDetailView: {
-    width: '85%',
+    width: "85%",
   },
   renderTitleTurnView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   renderTitleView: {
-    width: '80%',
+    width: "80%",
   },
   renderTitleText: {
     fontSize: 15,
@@ -117,9 +119,9 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.medium,
   },
   renderTurnTouchable: {
-    width: '20%',
+    width: "20%",
     backgroundColor: TapAppColors.white,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 10,
     paddingVertical: 3,
   },
@@ -129,10 +131,10 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.medium,
   },
   renderMessageView: {
-    width: '90%',
+    width: "90%",
   },
   renderMessageText: {
-    width: '100%',
+    width: "100%",
     fontSize: 13,
     color: TapAppColors.white,
     fontFamily: FontFamily.regular,
@@ -144,8 +146,8 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    width: '90%',
-    alignSelf: 'center',
+    width: "90%",
+    alignSelf: "center",
     marginVertical: 30,
   },
   titleText: {

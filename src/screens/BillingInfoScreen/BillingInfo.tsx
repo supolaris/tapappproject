@@ -1,6 +1,5 @@
 import ProfileDeletePopup from "@/src/components/common/popups/ProfileDeletePopup";
 import SearchValuePopup from "@/src/components/common/popups/SearchValuePopup";
-import { borderRadius } from "@/src/constants/AppConstants";
 import { billingValidationSchema } from "@/src/utils/validationSchema";
 import { Formik } from "formik";
 import moment from "moment";
@@ -205,7 +204,6 @@ const BillingInfoForm = (props: {
                 style={{
                   height: 40,
                   justifyContent: "center",
-                  borderRadius: borderRadius.medium,
                   backgroundColor: TapAppColors.white,
                 }}
                 onPress={parentProps.onDOBSelectPressed}
@@ -240,6 +238,7 @@ const BillingInfoForm = (props: {
                 style={{
                   justifyContent: "center",
                   height: 40,
+                  backgroundColor: TapAppColors.white,
                 }}
                 onPress={parentProps.onCountrySelect}
               >

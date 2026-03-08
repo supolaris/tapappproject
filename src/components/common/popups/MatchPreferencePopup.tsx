@@ -1,14 +1,14 @@
-import React, {memo} from 'react';
+import React, { memo } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-} from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
-import {TapAppColors} from '../../../constants/TapAppColors';
+  View,
+} from "react-native";
+import Entypo from "react-native-vector-icons/Entypo";
+import { TapAppColors } from "../../../constants/TapAppColors";
 
 interface IMatchPreferencePopupProps {
   isModalVisible: boolean;
@@ -31,7 +31,8 @@ const MatchPreferencePopup = (props: IMatchPreferencePopupProps) => {
     <Modal
       transparent={true}
       visible={props.isModalVisible}
-      onRequestClose={props.onRequestClose}>
+      onRequestClose={props.onRequestClose}
+    >
       <TouchableWithoutFeedback onPress={props.onRequestClose}>
         <View style={styles.container}>
           <TouchableWithoutFeedback>
@@ -40,7 +41,8 @@ const MatchPreferencePopup = (props: IMatchPreferencePopupProps) => {
                 <Text style={styles.headerTitleText}>{props.popupTitle}</Text>
                 <TouchableOpacity
                   onPress={props.onRequestClose}
-                  style={styles.crossTouchable}>
+                  style={styles.crossTouchable}
+                >
                   <Entypo name="cross" size={25} color={TapAppColors.white} />
                 </TouchableOpacity>
               </View>
@@ -50,11 +52,11 @@ const MatchPreferencePopup = (props: IMatchPreferencePopupProps) => {
                   {props.popupItemsData?.length > 0 &&
                     props.popupItemsData?.map((item: string, index: number) => {
                       const preference =
-                        props.parentCategory === 'TapLifestyle'
+                        props.parentCategory === "TapLifestyle"
                           ? props.selectedPreferences
-                          : props.parentCategory === 'TapPersonalDetails'
-                          ? props.selectedPersonalDetails
-                          : props.selectedPersonality;
+                          : props.parentCategory === "TapPersonalDetails"
+                            ? props.selectedPersonalDetails
+                            : props.selectedPersonality;
                       const isSelected =
                         preference[props.popupTitle]?.includes(item);
                       return (
@@ -62,7 +64,10 @@ const MatchPreferencePopup = (props: IMatchPreferencePopupProps) => {
                           key={index}
                           style={[
                             styles.itemTouchable,
-                            isSelected && {borderColor: 'red', borderWidth: 1},
+                            isSelected && {
+                              borderColor: "red",
+                              borderWidth: 1,
+                            },
                           ]}
                           onPress={() =>
                             props.onPreferenceSelect(
@@ -70,7 +75,8 @@ const MatchPreferencePopup = (props: IMatchPreferencePopupProps) => {
                               props.popupTitle,
                               item,
                             )
-                          }>
+                          }
+                        >
                           <Text style={styles.itemTouchableText}>{item}</Text>
                         </TouchableOpacity>
                       );
@@ -91,38 +97,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: TapAppColors.transparentBg,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   innerContainer: {
     height: 400,
-    width: '100%',
+    width: "100%",
     backgroundColor: TapAppColors.black,
     borderRadius: 10,
   },
   headerView: {
     paddingVertical: 20,
-    alignItems: 'center',
+    alignItems: "center",
     borderBottomWidth: 0.5,
-    borderColor: TapAppColors.primayGray,
-    justifyContent: 'center',
+    borderColor: TapAppColors.primaryGray,
+    justifyContent: "center",
   },
   headerTitleText: {
     fontSize: 15,
     color: TapAppColors.white,
   },
   crossTouchable: {
-    position: 'absolute',
+    position: "absolute",
     left: 20,
   },
   contentView: {
-    width: '90%',
-    alignSelf: 'center',
+    width: "90%",
+    alignSelf: "center",
   },
   itemsView: {
-    width: '90%',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
+    width: "90%",
+    flexWrap: "wrap",
+    flexDirection: "row",
     marginTop: 20,
   },
   itemTouchable: {

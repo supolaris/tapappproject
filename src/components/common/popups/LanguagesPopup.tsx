@@ -97,7 +97,7 @@ export default memo(LanguagePopup);
 const styles = StyleSheet.create({
   renderContainer: {
     borderBottomWidth: 0.5,
-    borderColor: TapAppColors.primayGray,
+    borderColor: TapAppColors.primaryGray,
     borderRadius: 10,
     paddingLeft: 5,
   },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: TapAppColors.primayGray,
+    borderColor: TapAppColors.primaryGray,
     justifyContent: "center",
   },
   headerTitleText: {
