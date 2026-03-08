@@ -73,17 +73,18 @@ export const clearLogoutData = async () => {
     await auth().signOut();
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    MMKVStorage.removeItem("UserEmail");
-    MMKVStorage.removeItem("UserName");
-    MMKVStorage.removeItem("UserImage");
-    MMKVStorage.removeItem("FirebaseToken");
+
+    // Clear all MMKV storage
+    MMKVStorage.clearStore();
+
+    // Clear global token
     if (typeof global !== "undefined") {
       global.token = "";
     }
     return true;
   } catch (error) {
     console.error("Error signing out:", error);
-  } finally {
+    return false;
   }
 };
 

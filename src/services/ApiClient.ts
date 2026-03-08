@@ -2,7 +2,7 @@ import auth from "@react-native-firebase/auth";
 import axios from "axios";
 import { requestTimeout } from "../constants/AppConstants";
 import { AppMessages } from "../constants/AppMessages";
-import { MMKVStorage, simpleToast } from "../utils/CommonFunctions";
+import { clearLogoutData, simpleToast } from "../utils/CommonFunctions";
 
 let isInternetConnected = true;
 
@@ -56,17 +56,7 @@ const refreshAuthToken = async (): Promise<string> => {
 
 // Handle logout on failed refresh
 const handleAuthFailure = () => {
-  // Clear stored token and user data
-  MMKVStorage.removeItem("FirebaseToken");
-  MMKVStorage.removeItem("UserEmail");
-  MMKVStorage.removeItem("UserName");
-  MMKVStorage.removeItem("UserImage");
-  if (typeof global !== "undefined") {
-    global.token = "";
-  }
-
-  // Sign out from Firebase
-  auth().signOut().catch(console.error);
+  clearLogoutData();
 
   // Show toast message
   simpleToast("Session expired, please log in again");

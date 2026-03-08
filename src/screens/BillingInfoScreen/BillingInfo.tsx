@@ -1,10 +1,10 @@
 import ProfileDeletePopup from "@/src/components/common/popups/ProfileDeletePopup";
 import SearchValuePopup from "@/src/components/common/popups/SearchValuePopup";
 import { borderRadius } from "@/src/constants/AppConstants";
+import { billingValidationSchema } from "@/src/utils/validationSchema";
+import { Formik } from "formik";
 import moment from "moment";
 import React from "react";
-import { Formik } from "formik";
-import * as yup from "yup";
 import {
   ScrollView,
   StyleSheet,
@@ -20,19 +20,6 @@ import MainHeader from "../../components/common/headers/MainHeader";
 import FormikSecondaryTextInput from "../../components/common/textInputs/FormikSecondaryTextInput";
 import CustomTouchable from "../../components/common/touchables/CustomTouchable";
 import { TapAppColors } from "../../constants/TapAppColors";
-
-const billingValidationSchema = yup.object().shape({
-  FirstName: yup.string().required("First name is required"),
-  MiddleName: yup.string().required("Middle name is required"),
-  LastName: yup.string().required("Last name is required"),
-  DOB: yup.string().required("Date of birth is required"),
-  Country: yup.string().required("Country is required"),
-  BillingAddress1: yup.string().required("Billing address 1 is required"),
-  BillingAddress2: yup.string().required("Billing address 2 is required"),
-  BillingCity: yup.string().required("Billing city is required"),
-  BillingState: yup.string().required("Billing state is required"),
-  BillingPincode: yup.string().required("Billing pin code is required"),
-});
 
 interface IFormValues {
   FirstName: string;
@@ -90,7 +77,8 @@ const BillingInfoForm = (props: {
   parentProps: IProps;
   submitCount: number;
 }) => {
-  const { values, setFieldValue, handleSubmit, parentProps, submitCount } = props;
+  const { values, setFieldValue, handleSubmit, parentProps, submitCount } =
+    props;
 
   return (
     <View style={styles.container}>
@@ -262,17 +250,24 @@ const BillingInfoForm = (props: {
                     paddingLeft: 5,
                   }}
                 >
-                  {values?.Country
-                    ? values?.Country
-                    : "Select Your Country"}
+                  {values?.Country ? values?.Country : "Select Your Country"}
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <FormikSecondaryTextInput name="BillingAddress1" label="Billing Address 1" />
-            <FormikSecondaryTextInput name="BillingAddress2" label="Billing Address 2" />
+            <FormikSecondaryTextInput
+              name="BillingAddress1"
+              label="Billing Address 1"
+            />
+            <FormikSecondaryTextInput
+              name="BillingAddress2"
+              label="Billing Address 2"
+            />
             <FormikSecondaryTextInput name="BillingCity" label="Billing city" />
-            <FormikSecondaryTextInput name="BillingState" label="Billing state" />
+            <FormikSecondaryTextInput
+              name="BillingState"
+              label="Billing state"
+            />
             <FormikSecondaryTextInput
               name="BillingPincode"
               label="Billing pin code"

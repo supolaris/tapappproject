@@ -72,7 +72,7 @@ export default MainHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: "20%",
+    paddingVertical: 30,
     backgroundColor: TapAppColors.black,
     justifyContent: "center",
   },

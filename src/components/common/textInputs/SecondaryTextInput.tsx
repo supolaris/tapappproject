@@ -15,6 +15,7 @@ interface SecondaryTextInputProps {
   numberOfLines?: number;
   onChangeText: (val: string) => void;
   onBlur?: (e: any) => void;
+  error?: string;
 }
 
 const SecondaryTextInput = (props: SecondaryTextInputProps) => {
@@ -46,6 +47,17 @@ const SecondaryTextInput = (props: SecondaryTextInputProps) => {
         onBlur={props.onBlur}
         textAlignVertical={props.isMultiLine ? 'top' : 'center'}
       />
+      {props.error && (
+        <CustomText
+          preset={{
+            text: props.error,
+            color: TapAppColors.primaryColor,
+            fontSize: 12,
+            fontWeight: 'regular',
+          }}
+          style={styles.errorText}
+        />
+      )}
     </View>
   );
 };
@@ -61,5 +73,9 @@ const styles = StyleSheet.create({
     color: TapAppColors.black,
     borderRadius: borderRadius,
     backgroundColor: TapAppColors.white,
+  },
+
+  errorText: {
+    marginTop: 4,
   },
 });

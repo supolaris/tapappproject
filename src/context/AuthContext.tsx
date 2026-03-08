@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { MMKVStorage } from "../utils/CommonFunctions";
+import { clearLogoutData, MMKVStorage } from "../utils/CommonFunctions";
 
 interface AuthContextType {
   user: any | null;
@@ -102,21 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   // Sign out
   const signOut = async () => {
     try {
-      await auth().signOut();
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-
-      // Clear MMKV storage
-      MMKVStorage.removeItem("FirebaseToken");
-      MMKVStorage.removeItem("UserEmail");
-      MMKVStorage.removeItem("UserName");
-      MMKVStorage.removeItem("UserImage");
-
-      // Clear global token
-      if (typeof global !== "undefined") {
-        (global as any).token = "";
-      }
-
+      await clearLogoutData();
       setUser(null);
     } catch (error) {
       console.error("Sign out error:", error);

@@ -42,6 +42,7 @@ const FormikSecondaryTextInput = ({
         field.onBlur({ target: { name } });
       }}
       onChangeText={field.onChange(name)}
+      error={showError && meta.error ? meta.error : undefined}
     />
   );
 };
