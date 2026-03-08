@@ -1,4 +1,4 @@
-import {ICurlLocation} from './commonInterface';
+import { ICreatedUpdatedDeleted, ICurlLocation } from "../CommonTypes";
 
 export interface ISelectedMatchPreferences {
   ID: number;
@@ -16,19 +16,15 @@ export interface ISavePreferences {
 }
 
 // match profile preferences
-export interface IMatchPreferencesResponse {
+export interface IMatchPreferencesResponse extends ICreatedUpdatedDeleted {
   ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string | null;
   tap_user_id: number;
   preferences: IMatchPreferences;
 }
 
 export interface IMatchPreferences {
-  // TapLanguages: string[];
+  TapLanguages: string[];
   TapLifestylePets: string;
-  // TapPrivacyShowAge: boolean;
   TapLifestyleOpenTo: string;
   TapPersonalityType: string;
   TapLifestyleSmoking: string;
@@ -42,7 +38,6 @@ export interface IMatchPreferences {
   TapProfessionalSchool: string;
   TapGoingOutSocialVibe: string;
   TapGoingOutDressStyle: string;
-  // TapPrivacyShowGender: boolean;
   TapLifestyleLifestyle: string;
   TapCurLocationLivingIn: string;
   TapProfessionalCompany: string;
@@ -53,7 +48,6 @@ export interface IMatchPreferences {
   TapLifestyleSocialMedia: string;
   TapMyWeekendsPaceEnergy: string;
   TapMyWeekendsActivities: string;
-  // TapPrivacyShowDistance: boolean;
   TapPersonalDetailsGender: string;
   TapPersonalDetailsZodiac: string;
   TapPersonalDetailsOpenTo: string;
@@ -62,7 +56,6 @@ export interface IMatchPreferences {
   TapPersonalDetailsAboutMe: string;
   TapLifestyleSleepingHabits: string;
   TapPersonalityLoveLanguage: string;
-  // TapPrivacyShowSmartPhotos: boolean;
   TapPersonalDetailsInterests: string;
   TapPersonalDetailsEducation: string;
   TapDiscoveryMaximumDistance: number;
@@ -74,7 +67,6 @@ export interface IMatchPreferences {
   TapDiscoveryMaxNumberOfPhotos: number;
   TapLifestyleDietaryPreference: string;
   TapGoingOutPreferredActivities: string;
-  // TapPrivacyShowCurrentLocation: boolean;
   TapPersonalityCommunicationStyle: string;
   TapHealthAndWellnessCovidVaccine: boolean;
   TapPersonalDetailsSexualOrientation: string;

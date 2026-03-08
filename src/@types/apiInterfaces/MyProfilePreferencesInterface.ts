@@ -1,5 +1,4 @@
-import { IUserImages } from "../CommonTypes";
-import { ICurlLocation } from "./commonInterface";
+import { ICurlLocation, IUserImages } from "../CommonTypes";
 
 // my profile preferences
 export interface IMyProfilePreferences {

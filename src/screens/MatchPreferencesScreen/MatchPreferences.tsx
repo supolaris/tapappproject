@@ -4,7 +4,6 @@ import React from "react";
 import {
   Dimensions,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -21,9 +20,12 @@ import CustomTouchable from "../../components/common/touchables/CustomTouchable"
 import PreferencesTouchable from "../../components/common/touchables/PreferencesTouchable";
 import { AppMessages } from "../../constants/AppMessages";
 import { TapAppColors } from "../../constants/TapAppColors";
+import { MatchPreferencesStyles } from "./MatchPreferencesStyles";
 
 const screenWidth = Dimensions.get("window").width;
 const sliderWidth = screenWidth * 0.82;
+
+const styles = MatchPreferencesStyles;
 
 interface IMatchPreferencesProps {
   isLoading: boolean;
@@ -69,6 +71,10 @@ const MatchPreferences = (props: IMatchPreferencesProps) => {
       }}
     >
       <View style={styles.mainContainer}>
+        <PreferencesHeader
+          title="Match Preferences"
+          onDonePressed={props.onSavePressed}
+        />
         <AlertPopup
           confirmText="Save"
           cancelText={"Cancel"}
@@ -76,10 +82,6 @@ const MatchPreferences = (props: IMatchPreferencesProps) => {
           isAlertPopupVisible={props.isAlertPopupVisible}
           onAlertPopupCancel={props.onAlertPopupCancel}
           onAlertPopupConfirm={props.onAlertPopupConfirm}
-        />
-        <PreferencesHeader
-          title="Match Preferences"
-          onDonePressed={props.onSavePressed}
         />
 
         <ScrollView style={{ flex: 1 }}>
@@ -284,98 +286,3 @@ const MatchPreferences = (props: IMatchPreferencesProps) => {
 };
 
 export default MatchPreferences;
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: TapAppColors.black,
-  },
-  container: {
-    paddingBottom: 30,
-  },
-
-  innerContainer: {
-    width: "90%",
-    alignSelf: "center",
-  },
-  valuesContainer: {
-    backgroundColor: TapAppColors.appBackground,
-    borderRadius: 10,
-  },
-  touchableStyles: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderBottomWidth: 0.5,
-    borderColor: "#46474b",
-  },
-  descriptionText: {
-    fontSize: 12,
-    marginTop: 10,
-    marginBottom: 10,
-    color: TapAppColors.white,
-  },
-  iconTitleView: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  sliderView: {
-    width: "100%",
-    alignItems: "center",
-  },
-  titleValueView: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  icon: {
-    marginRight: 15,
-  },
-  titleToogleView: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  toogleView: {
-    width: "25%",
-  },
-  titleText: {
-    width: "75%",
-    color: TapAppColors.white,
-    fontSize: 15,
-  },
-  valueText: {
-    width: "25%",
-    color: TapAppColors.white,
-    fontSize: 15,
-    textAlign: "right",
-
-    paddingRight: 10,
-  },
-  headingTextView: {
-    width: "90%",
-    paddingVertical: 20,
-  },
-  headingText: {
-    width: "90%",
-    fontSize: 15,
-    color: TapAppColors.white,
-  },
-
-  categoryView: {
-    backgroundColor: TapAppColors.appBackground,
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 5,
-  },
-  //
-  renderContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 10,
-  },
-});

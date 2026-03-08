@@ -1,6 +1,6 @@
 import { UserContext } from "@/src/context/Context";
+import { useGetAllowedValuesService } from "@/src/services/CommonServices";
 import {
-  useGetAllowedValues,
   useGetUserById,
   useGetUserPreferences,
 } from "@/src/services/ProfilePreviewServices";
@@ -21,7 +21,7 @@ export function ProfilePreviewScreen({
     : currentUserCtx?.User?.PersonID;
 
   const userDataResponse = useGetUserById(userId as number);
-  const allowedValuesResponse = useGetAllowedValues();
+  const allowedValuesResponse = useGetAllowedValuesService();
   const userPreferencesResponse = useGetUserPreferences();
 
   return (

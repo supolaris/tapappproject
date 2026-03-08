@@ -1,27 +1,32 @@
+import { useGetAllowedValuesService } from "@/src/services/CommonServices";
+import { useGetMatchedPreferences } from "@/src/services/MatchPreferenceServices";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { IMatchPreferences } from "../../@types/apiInterfaces/MatchPreferencesInterface";
-import { IAllowedValues } from "../../@types/apiInterfaces/commonInterface";
 import { singleSelectTitles } from "../../constants/StaticData";
 import { UserContext } from "../../context/Context";
-import {
-  GetAllowedValuesService,
-  SavePreferencesService,
-} from "../../services/MyPreferenceServices";
-import { GetMatchPreferencesService } from "../../services/MyProfileServices";
+import { SavePreferencesService } from "../../services/MyPreferenceServices";
 import { simpleToast } from "../../utils/CommonFunctions";
 import MatchPreferences from "./MatchPreferences";
 
 export const MatchPreferencesScreen = () => {
-  const { matchPreferencesCtx, updateAllowedCtx, updateMatchPreferencesCtx } =
-    UserContext();
+  const router = useRouter();
+  const { matchPreferencesCtx, updateMatchPreferencesCtx } = UserContext();
+
+  const allowedValuesResponse = useGetAllowedValuesService();
+  const matchedPreferencesResponse = useGetMatchedPreferences();
+
+  console.log(
+    "matchedPreferencesResponse =>>>>>",
+    matchedPreferencesResponse?.data,
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [allowedValues, setAllowedValues] = useState<IAllowedValues[]>([]);
   const [newSelectedCategory, setNewSelectedCategory] = useState<string>("");
   const [isAlertPopupVisible, setIsAlertPopupVisible] =
     useState<boolean>(false);
   const [matchPreferences, setMatchPreferences] = useState<IMatchPreferences>({
-    // TapLanguages: matchPreferencesCtx?.TapLanguages || [],
+    TapLanguages: matchPreferencesCtx?.TapLanguages || [],
     TapLifestylePets: matchPreferencesCtx?.TapLifestylePets || "",
     TapLifestyleOpenTo: matchPreferencesCtx?.TapLifestyleOpenTo || "",
     TapPersonalityType: matchPreferencesCtx?.TapPersonalityType || "",
@@ -119,284 +124,277 @@ export const MatchPreferencesScreen = () => {
   });
 
   useEffect(() => {
-    getAllowedValues();
-    getMatchPreferences();
-  }, []);
-
-  useEffect(() => {
     setMatchPreferences((preVal) => ({
       ...preVal,
       CurLocation: matchPreferencesCtx?.CurLocation,
     }));
   }, [matchPreferencesCtx?.CurLocation]);
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await GetMatchPreferencesService();
+  //     if (response) {
+  //       updateMatchPreferencesCtx({
+  //         // TapLanguages: response?.preferences?.TapLanguages || [],
+  //         TapLifestylePets: response?.preferences?.TapLifestylePets || "",
+  //         TapLifestyleOpenTo: response?.preferences?.TapLifestyleOpenTo || "",
+  //         TapPersonalityType: response?.preferences?.TapPersonalityType || "",
+  //         TapLifestyleSmoking: response?.preferences?.TapLifestyleSmoking || "",
+  //         TapLifestyleWorkout: response?.preferences?.TapLifestyleWorkout || "",
+  //         TapLanguagesLanguage:
+  //           response?.preferences?.TapLanguagesLanguage || "",
+  //         TapPersonalityTrait: response?.preferences?.TapPersonalityTrait || "",
+  //         TapLifestyleDrinking:
+  //           response?.preferences?.TapLifestyleDrinking || "",
+  //         TapLifestyleCannabis:
+  //           response?.preferences?.TapLifestyleCannabis || "",
+  //         TapDiscoveryLocation:
+  //           response?.preferences?.TapDiscoveryLocation || "",
+  //         TapDiscoveryHasABio:
+  //           response?.preferences?.TapDiscoveryHasABio ?? false,
+  //         TapProfessionalSchool:
+  //           response?.preferences?.TapProfessionalSchool || "",
+  //         TapGoingOutSocialVibe:
+  //           response?.preferences?.TapGoingOutSocialVibe || "",
+  //         TapGoingOutDressStyle:
+  //           response?.preferences?.TapGoingOutDressStyle || "",
+  //         TapLifestyleLifestyle:
+  //           response?.preferences?.TapLifestyleLifestyle || "",
+  //         TapCurLocationLivingIn:
+  //           response?.preferences?.TapCurLocationLivingIn || "",
+  //         TapProfessionalCompany:
+  //           response?.preferences?.TapProfessionalCompany || "",
+  //         TapLifestyleLookingFor:
+  //           response?.preferences?.TapLifestyleLookingFor || "",
+  //         TapPersonalityLoveStyle:
+  //           response?.preferences?.TapPersonalityLoveStyle || "",
+  //         TapProfessionalLanguage:
+  //           response?.preferences?.TapProfessionalLanguage || "",
+  //         TapProfessionalJobTitle:
+  //           response?.preferences?.TapProfessionalJobTitle || "",
+  //         TapLifestyleSocialMedia:
+  //           response?.preferences?.TapLifestyleSocialMedia || "",
+  //         TapMyWeekendsPaceEnergy:
+  //           response?.preferences?.TapMyWeekendsPaceEnergy || "",
+  //         TapMyWeekendsActivities:
+  //           response?.preferences?.TapMyWeekendsActivities || "",
+  //         TapPersonalDetailsGender:
+  //           response?.preferences?.TapPersonalDetailsGender || "",
+  //         TapPersonalDetailsZodiac:
+  //           response?.preferences?.TapPersonalDetailsZodiac || "",
+  //         TapPersonalDetailsOpenTo:
+  //           response?.preferences?.TapPersonalDetailsOpenTo || "",
+  //         TapMyWeekendsSocialEnergy:
+  //           response?.preferences?.TapMyWeekendsSocialEnergy || "",
+  //         TapMyWeekendsSocialHabits:
+  //           response?.preferences?.TapMyWeekendsSocialHabits || "",
+  //         TapPersonalDetailsAboutMe:
+  //           response?.preferences?.TapPersonalDetailsAboutMe || "",
+  //         TapLifestyleSleepingHabits:
+  //           response?.preferences?.TapLifestyleSleepingHabits || "",
+  //         TapPersonalityLoveLanguage:
+  //           response?.preferences?.TapPersonalityLoveLanguage || "",
+  //         TapPersonalDetailsInterests:
+  //           response?.preferences?.TapPersonalDetailsInterests || "",
+  //         TapPersonalDetailsEducation:
+  //           response?.preferences?.TapPersonalDetailsEducation || "",
+  //         TapDiscoveryMaximumDistance:
+  //           response?.preferences?.TapDiscoveryMaximumDistance ?? 0,
+  //         TapDiscoveryAgeRangeMinimum:
+  //           response?.preferences?.TapDiscoveryAgeRangeMinimum ?? 0,
+  //         TapDiscoveryAgeRangeMaximum:
+  //           response?.preferences?.TapDiscoveryAgeRangeMaximum ?? 0,
+  //         TapLifestyleWorkoutFrequency:
+  //           response?.preferences?.TapLifestyleWorkoutFrequency || "",
+  //         TapPersonalDetailsLookingFor:
+  //           response?.preferences?.TapPersonalDetailsLookingFor || "",
+  //         TapPersonalDetailsFamilyPlans:
+  //           response?.preferences?.TapPersonalDetailsFamilyPlans || "",
+  //         TapDiscoveryMaxNumberOfPhotos:
+  //           response?.preferences?.TapDiscoveryMaxNumberOfPhotos ?? 0,
+  //         TapLifestyleDietaryPreference:
+  //           response?.preferences?.TapLifestyleDietaryPreference || "",
+  //         TapGoingOutPreferredActivities:
+  //           response?.preferences?.TapGoingOutPreferredActivities || "",
+  //         TapPersonalityCommunicationStyle:
+  //           response?.preferences?.TapPersonalityCommunicationStyle || "",
+  //         TapHealthAndWellnessCovidVaccine:
+  //           response?.preferences?.TapHealthAndWellnessCovidVaccine ?? false,
+  //         TapPersonalDetailsSexualOrientation:
+  //           response?.preferences?.TapPersonalDetailsSexualOrientation || "",
+  //         TapPersonalDetailsRelationshipGoals:
+  //           response?.preferences?.TapPersonalDetailsRelationshipGoals || "",
+  //         TapMusicAndEntertainmentSpotifyAnthem:
+  //           response?.preferences?.TapMusicAndEntertainmentSpotifyAnthem || "",
+  //         TapMyCommunicationStyleResponsiveness:
+  //           response?.preferences?.TapMyCommunicationStyleResponsiveness || "",
+  //         TapMyCommunicationStylePhoneUsageHabits:
+  //           response?.preferences?.TapMyCommunicationStylePhoneUsageHabits ||
+  //           "",
+  //         TapMusicAndEntertainmentTopSpotifyArtists:
+  //           response?.preferences?.TapMusicAndEntertainmentTopSpotifyArtists ||
+  //           "",
+  //         TapMyCommunicationStylePreferredCommunicationMethod:
+  //           response?.preferences
+  //             ?.TapMyCommunicationStylePreferredCommunicationMethod || "",
+  //         CurLocation: {
+  //           TapProfilelng:
+  //             response?.preferences?.CurLocation?.TapProfilelng ?? 0,
+  //           TapProfilelat:
+  //             response?.preferences?.CurLocation?.TapProfilelat ?? 0,
+  //           tap_profile_id:
+  //             response?.preferences?.CurLocation?.tap_profile_id ?? 0,
+  //           TapProfileAreaName:
+  //             response?.preferences?.CurLocation?.TapProfileAreaName || "",
+  //           TapProfileCityName:
+  //             response?.preferences?.CurLocation?.TapProfileCityName || "",
+  //           TapProfileCountryName:
+  //             response?.preferences?.CurLocation?.TapProfileCountryName || "",
+  //           TapProfileCountryCode:
+  //             response?.preferences?.CurLocation?.TapProfileCountryCode || "",
+  //         },
+  //       });
+  //       setMatchPreferences({
+  //         // TapLanguages: response?.preferences?.TapLanguages || [],
+  //         TapLifestylePets: response?.preferences?.TapLifestylePets || "",
+  //         TapLifestyleOpenTo: response?.preferences?.TapLifestyleOpenTo || "",
+  //         TapPersonalityType: response?.preferences?.TapPersonalityType || "",
+  //         TapLifestyleSmoking: response?.preferences?.TapLifestyleSmoking || "",
+  //         TapLifestyleWorkout: response?.preferences?.TapLifestyleWorkout || "",
+  //         TapLanguagesLanguage:
+  //           response?.preferences?.TapLanguagesLanguage || "",
+  //         TapPersonalityTrait: response?.preferences?.TapPersonalityTrait || "",
+  //         TapLifestyleDrinking:
+  //           response?.preferences?.TapLifestyleDrinking || "",
+  //         TapLifestyleCannabis:
+  //           response?.preferences?.TapLifestyleCannabis || "",
+  //         TapDiscoveryLocation:
+  //           response?.preferences?.TapDiscoveryLocation || "",
+  //         TapDiscoveryHasABio:
+  //           response?.preferences?.TapDiscoveryHasABio ?? false,
+  //         TapProfessionalSchool:
+  //           response?.preferences?.TapProfessionalSchool || "",
+  //         TapGoingOutSocialVibe:
+  //           response?.preferences?.TapGoingOutSocialVibe || "",
+  //         TapGoingOutDressStyle:
+  //           response?.preferences?.TapGoingOutDressStyle || "",
+  //         TapLifestyleLifestyle:
+  //           response?.preferences?.TapLifestyleLifestyle || "",
+  //         TapCurLocationLivingIn:
+  //           response?.preferences?.TapCurLocationLivingIn || "",
+  //         TapProfessionalCompany:
+  //           response?.preferences?.TapProfessionalCompany || "",
+  //         TapLifestyleLookingFor:
+  //           response?.preferences?.TapLifestyleLookingFor || "",
+  //         TapPersonalityLoveStyle:
+  //           response?.preferences?.TapPersonalityLoveStyle || "",
+  //         TapProfessionalLanguage:
+  //           response?.preferences?.TapProfessionalLanguage || "",
+  //         TapProfessionalJobTitle:
+  //           response?.preferences?.TapProfessionalJobTitle || "",
+  //         TapLifestyleSocialMedia:
+  //           response?.preferences?.TapLifestyleSocialMedia || "",
+  //         TapMyWeekendsPaceEnergy:
+  //           response?.preferences?.TapMyWeekendsPaceEnergy || "",
+  //         TapMyWeekendsActivities:
+  //           response?.preferences?.TapMyWeekendsActivities || "",
+  //         TapPersonalDetailsGender:
+  //           response?.preferences?.TapPersonalDetailsGender || "",
+  //         TapPersonalDetailsZodiac:
+  //           response?.preferences?.TapPersonalDetailsZodiac || "",
+  //         TapPersonalDetailsOpenTo:
+  //           response?.preferences?.TapPersonalDetailsOpenTo || "",
+  //         TapMyWeekendsSocialEnergy:
+  //           response?.preferences?.TapMyWeekendsSocialEnergy || "",
+  //         TapMyWeekendsSocialHabits:
+  //           response?.preferences?.TapMyWeekendsSocialHabits || "",
+  //         TapPersonalDetailsAboutMe:
+  //           response?.preferences?.TapPersonalDetailsAboutMe || "",
+  //         TapLifestyleSleepingHabits:
+  //           response?.preferences?.TapLifestyleSleepingHabits || "",
+  //         TapPersonalityLoveLanguage:
+  //           response?.preferences?.TapPersonalityLoveLanguage || "",
+  //         TapPersonalDetailsInterests:
+  //           response?.preferences?.TapPersonalDetailsInterests || "",
+  //         TapPersonalDetailsEducation:
+  //           response?.preferences?.TapPersonalDetailsEducation || "",
+  //         TapDiscoveryMaximumDistance:
+  //           response?.preferences?.TapDiscoveryMaximumDistance ?? 0,
+  //         TapDiscoveryAgeRangeMinimum:
+  //           response?.preferences?.TapDiscoveryAgeRangeMinimum ?? 0,
+  //         TapDiscoveryAgeRangeMaximum:
+  //           response?.preferences?.TapDiscoveryAgeRangeMaximum ?? 0,
+  //         TapLifestyleWorkoutFrequency:
+  //           response?.preferences?.TapLifestyleWorkoutFrequency || "",
+  //         TapPersonalDetailsLookingFor:
+  //           response?.preferences?.TapPersonalDetailsLookingFor || "",
+  //         TapPersonalDetailsFamilyPlans:
+  //           response?.preferences?.TapPersonalDetailsFamilyPlans || "",
+  //         TapDiscoveryMaxNumberOfPhotos:
+  //           response?.preferences?.TapDiscoveryMaxNumberOfPhotos ?? 0,
+  //         TapLifestyleDietaryPreference:
+  //           response?.preferences?.TapLifestyleDietaryPreference || "",
+  //         TapGoingOutPreferredActivities:
+  //           response?.preferences?.TapGoingOutPreferredActivities || "",
+  //         TapPersonalityCommunicationStyle:
+  //           response?.preferences?.TapPersonalityCommunicationStyle || "",
+  //         TapHealthAndWellnessCovidVaccine:
+  //           response?.preferences?.TapHealthAndWellnessCovidVaccine ?? false,
+  //         TapPersonalDetailsSexualOrientation:
+  //           response?.preferences?.TapPersonalDetailsSexualOrientation || "",
+  //         TapPersonalDetailsRelationshipGoals:
+  //           response?.preferences?.TapPersonalDetailsRelationshipGoals || "",
+  //         TapMusicAndEntertainmentSpotifyAnthem:
+  //           response?.preferences?.TapMusicAndEntertainmentSpotifyAnthem || "",
+  //         TapMyCommunicationStyleResponsiveness:
+  //           response?.preferences?.TapMyCommunicationStyleResponsiveness || "",
+  //         TapMyCommunicationStylePhoneUsageHabits:
+  //           response?.preferences?.TapMyCommunicationStylePhoneUsageHabits ||
+  //           "",
+  //         TapMusicAndEntertainmentTopSpotifyArtists:
+  //           response?.preferences?.TapMusicAndEntertainmentTopSpotifyArtists ||
+  //           "",
+  //         TapMyCommunicationStylePreferredCommunicationMethod:
+  //           response?.preferences
+  //             ?.TapMyCommunicationStylePreferredCommunicationMethod || "",
+  //         CurLocation: {
+  //           TapProfilelng:
+  //             response?.preferences?.CurLocation?.TapProfilelng ?? 0,
+  //           TapProfilelat:
+  //             response?.preferences?.CurLocation?.TapProfilelat ?? 0,
+  //           tap_profile_id:
+  //             response?.preferences?.CurLocation?.tap_profile_id ?? 0,
+  //           TapProfileAreaName:
+  //             response?.preferences?.CurLocation?.TapProfileAreaName || "",
+  //           TapProfileCityName:
+  //             response?.preferences?.CurLocation?.TapProfileCityName || "",
+  //           TapProfileCountryName:
+  //             response?.preferences?.CurLocation?.TapProfileCountryName || "",
+  //           TapProfileCountryCode:
+  //             response?.preferences?.CurLocation?.TapProfileCountryCode || "",
+  //         },
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log("error in getting selected preferences", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  const getMatchPreferences = async () => {
-    try {
-      setIsLoading(true);
-      const response = await GetMatchPreferencesService();
-      if (response) {
-        updateMatchPreferencesCtx({
-          // TapLanguages: response?.preferences?.TapLanguages || [],
-          TapLifestylePets: response?.preferences?.TapLifestylePets || "",
-          TapLifestyleOpenTo: response?.preferences?.TapLifestyleOpenTo || "",
-          TapPersonalityType: response?.preferences?.TapPersonalityType || "",
-          TapLifestyleSmoking: response?.preferences?.TapLifestyleSmoking || "",
-          TapLifestyleWorkout: response?.preferences?.TapLifestyleWorkout || "",
-          TapLanguagesLanguage:
-            response?.preferences?.TapLanguagesLanguage || "",
-          TapPersonalityTrait: response?.preferences?.TapPersonalityTrait || "",
-          TapLifestyleDrinking:
-            response?.preferences?.TapLifestyleDrinking || "",
-          TapLifestyleCannabis:
-            response?.preferences?.TapLifestyleCannabis || "",
-          TapDiscoveryLocation:
-            response?.preferences?.TapDiscoveryLocation || "",
-          TapDiscoveryHasABio:
-            response?.preferences?.TapDiscoveryHasABio ?? false,
-          TapProfessionalSchool:
-            response?.preferences?.TapProfessionalSchool || "",
-          TapGoingOutSocialVibe:
-            response?.preferences?.TapGoingOutSocialVibe || "",
-          TapGoingOutDressStyle:
-            response?.preferences?.TapGoingOutDressStyle || "",
-          TapLifestyleLifestyle:
-            response?.preferences?.TapLifestyleLifestyle || "",
-          TapCurLocationLivingIn:
-            response?.preferences?.TapCurLocationLivingIn || "",
-          TapProfessionalCompany:
-            response?.preferences?.TapProfessionalCompany || "",
-          TapLifestyleLookingFor:
-            response?.preferences?.TapLifestyleLookingFor || "",
-          TapPersonalityLoveStyle:
-            response?.preferences?.TapPersonalityLoveStyle || "",
-          TapProfessionalLanguage:
-            response?.preferences?.TapProfessionalLanguage || "",
-          TapProfessionalJobTitle:
-            response?.preferences?.TapProfessionalJobTitle || "",
-          TapLifestyleSocialMedia:
-            response?.preferences?.TapLifestyleSocialMedia || "",
-          TapMyWeekendsPaceEnergy:
-            response?.preferences?.TapMyWeekendsPaceEnergy || "",
-          TapMyWeekendsActivities:
-            response?.preferences?.TapMyWeekendsActivities || "",
-          TapPersonalDetailsGender:
-            response?.preferences?.TapPersonalDetailsGender || "",
-          TapPersonalDetailsZodiac:
-            response?.preferences?.TapPersonalDetailsZodiac || "",
-          TapPersonalDetailsOpenTo:
-            response?.preferences?.TapPersonalDetailsOpenTo || "",
-          TapMyWeekendsSocialEnergy:
-            response?.preferences?.TapMyWeekendsSocialEnergy || "",
-          TapMyWeekendsSocialHabits:
-            response?.preferences?.TapMyWeekendsSocialHabits || "",
-          TapPersonalDetailsAboutMe:
-            response?.preferences?.TapPersonalDetailsAboutMe || "",
-          TapLifestyleSleepingHabits:
-            response?.preferences?.TapLifestyleSleepingHabits || "",
-          TapPersonalityLoveLanguage:
-            response?.preferences?.TapPersonalityLoveLanguage || "",
-          TapPersonalDetailsInterests:
-            response?.preferences?.TapPersonalDetailsInterests || "",
-          TapPersonalDetailsEducation:
-            response?.preferences?.TapPersonalDetailsEducation || "",
-          TapDiscoveryMaximumDistance:
-            response?.preferences?.TapDiscoveryMaximumDistance ?? 0,
-          TapDiscoveryAgeRangeMinimum:
-            response?.preferences?.TapDiscoveryAgeRangeMinimum ?? 0,
-          TapDiscoveryAgeRangeMaximum:
-            response?.preferences?.TapDiscoveryAgeRangeMaximum ?? 0,
-          TapLifestyleWorkoutFrequency:
-            response?.preferences?.TapLifestyleWorkoutFrequency || "",
-          TapPersonalDetailsLookingFor:
-            response?.preferences?.TapPersonalDetailsLookingFor || "",
-          TapPersonalDetailsFamilyPlans:
-            response?.preferences?.TapPersonalDetailsFamilyPlans || "",
-          TapDiscoveryMaxNumberOfPhotos:
-            response?.preferences?.TapDiscoveryMaxNumberOfPhotos ?? 0,
-          TapLifestyleDietaryPreference:
-            response?.preferences?.TapLifestyleDietaryPreference || "",
-          TapGoingOutPreferredActivities:
-            response?.preferences?.TapGoingOutPreferredActivities || "",
-          TapPersonalityCommunicationStyle:
-            response?.preferences?.TapPersonalityCommunicationStyle || "",
-          TapHealthAndWellnessCovidVaccine:
-            response?.preferences?.TapHealthAndWellnessCovidVaccine ?? false,
-          TapPersonalDetailsSexualOrientation:
-            response?.preferences?.TapPersonalDetailsSexualOrientation || "",
-          TapPersonalDetailsRelationshipGoals:
-            response?.preferences?.TapPersonalDetailsRelationshipGoals || "",
-          TapMusicAndEntertainmentSpotifyAnthem:
-            response?.preferences?.TapMusicAndEntertainmentSpotifyAnthem || "",
-          TapMyCommunicationStyleResponsiveness:
-            response?.preferences?.TapMyCommunicationStyleResponsiveness || "",
-          TapMyCommunicationStylePhoneUsageHabits:
-            response?.preferences?.TapMyCommunicationStylePhoneUsageHabits ||
-            "",
-          TapMusicAndEntertainmentTopSpotifyArtists:
-            response?.preferences?.TapMusicAndEntertainmentTopSpotifyArtists ||
-            "",
-          TapMyCommunicationStylePreferredCommunicationMethod:
-            response?.preferences
-              ?.TapMyCommunicationStylePreferredCommunicationMethod || "",
-          CurLocation: {
-            TapProfilelng:
-              response?.preferences?.CurLocation?.TapProfilelng ?? 0,
-            TapProfilelat:
-              response?.preferences?.CurLocation?.TapProfilelat ?? 0,
-            tap_profile_id:
-              response?.preferences?.CurLocation?.tap_profile_id ?? 0,
-            TapProfileAreaName:
-              response?.preferences?.CurLocation?.TapProfileAreaName || "",
-            TapProfileCityName:
-              response?.preferences?.CurLocation?.TapProfileCityName || "",
-            TapProfileCountryName:
-              response?.preferences?.CurLocation?.TapProfileCountryName || "",
-            TapProfileCountryCode:
-              response?.preferences?.CurLocation?.TapProfileCountryCode || "",
-          },
-        });
-        setMatchPreferences({
-          // TapLanguages: response?.preferences?.TapLanguages || [],
-          TapLifestylePets: response?.preferences?.TapLifestylePets || "",
-          TapLifestyleOpenTo: response?.preferences?.TapLifestyleOpenTo || "",
-          TapPersonalityType: response?.preferences?.TapPersonalityType || "",
-          TapLifestyleSmoking: response?.preferences?.TapLifestyleSmoking || "",
-          TapLifestyleWorkout: response?.preferences?.TapLifestyleWorkout || "",
-          TapLanguagesLanguage:
-            response?.preferences?.TapLanguagesLanguage || "",
-          TapPersonalityTrait: response?.preferences?.TapPersonalityTrait || "",
-          TapLifestyleDrinking:
-            response?.preferences?.TapLifestyleDrinking || "",
-          TapLifestyleCannabis:
-            response?.preferences?.TapLifestyleCannabis || "",
-          TapDiscoveryLocation:
-            response?.preferences?.TapDiscoveryLocation || "",
-          TapDiscoveryHasABio:
-            response?.preferences?.TapDiscoveryHasABio ?? false,
-          TapProfessionalSchool:
-            response?.preferences?.TapProfessionalSchool || "",
-          TapGoingOutSocialVibe:
-            response?.preferences?.TapGoingOutSocialVibe || "",
-          TapGoingOutDressStyle:
-            response?.preferences?.TapGoingOutDressStyle || "",
-          TapLifestyleLifestyle:
-            response?.preferences?.TapLifestyleLifestyle || "",
-          TapCurLocationLivingIn:
-            response?.preferences?.TapCurLocationLivingIn || "",
-          TapProfessionalCompany:
-            response?.preferences?.TapProfessionalCompany || "",
-          TapLifestyleLookingFor:
-            response?.preferences?.TapLifestyleLookingFor || "",
-          TapPersonalityLoveStyle:
-            response?.preferences?.TapPersonalityLoveStyle || "",
-          TapProfessionalLanguage:
-            response?.preferences?.TapProfessionalLanguage || "",
-          TapProfessionalJobTitle:
-            response?.preferences?.TapProfessionalJobTitle || "",
-          TapLifestyleSocialMedia:
-            response?.preferences?.TapLifestyleSocialMedia || "",
-          TapMyWeekendsPaceEnergy:
-            response?.preferences?.TapMyWeekendsPaceEnergy || "",
-          TapMyWeekendsActivities:
-            response?.preferences?.TapMyWeekendsActivities || "",
-          TapPersonalDetailsGender:
-            response?.preferences?.TapPersonalDetailsGender || "",
-          TapPersonalDetailsZodiac:
-            response?.preferences?.TapPersonalDetailsZodiac || "",
-          TapPersonalDetailsOpenTo:
-            response?.preferences?.TapPersonalDetailsOpenTo || "",
-          TapMyWeekendsSocialEnergy:
-            response?.preferences?.TapMyWeekendsSocialEnergy || "",
-          TapMyWeekendsSocialHabits:
-            response?.preferences?.TapMyWeekendsSocialHabits || "",
-          TapPersonalDetailsAboutMe:
-            response?.preferences?.TapPersonalDetailsAboutMe || "",
-          TapLifestyleSleepingHabits:
-            response?.preferences?.TapLifestyleSleepingHabits || "",
-          TapPersonalityLoveLanguage:
-            response?.preferences?.TapPersonalityLoveLanguage || "",
-          TapPersonalDetailsInterests:
-            response?.preferences?.TapPersonalDetailsInterests || "",
-          TapPersonalDetailsEducation:
-            response?.preferences?.TapPersonalDetailsEducation || "",
-          TapDiscoveryMaximumDistance:
-            response?.preferences?.TapDiscoveryMaximumDistance ?? 0,
-          TapDiscoveryAgeRangeMinimum:
-            response?.preferences?.TapDiscoveryAgeRangeMinimum ?? 0,
-          TapDiscoveryAgeRangeMaximum:
-            response?.preferences?.TapDiscoveryAgeRangeMaximum ?? 0,
-          TapLifestyleWorkoutFrequency:
-            response?.preferences?.TapLifestyleWorkoutFrequency || "",
-          TapPersonalDetailsLookingFor:
-            response?.preferences?.TapPersonalDetailsLookingFor || "",
-          TapPersonalDetailsFamilyPlans:
-            response?.preferences?.TapPersonalDetailsFamilyPlans || "",
-          TapDiscoveryMaxNumberOfPhotos:
-            response?.preferences?.TapDiscoveryMaxNumberOfPhotos ?? 0,
-          TapLifestyleDietaryPreference:
-            response?.preferences?.TapLifestyleDietaryPreference || "",
-          TapGoingOutPreferredActivities:
-            response?.preferences?.TapGoingOutPreferredActivities || "",
-          TapPersonalityCommunicationStyle:
-            response?.preferences?.TapPersonalityCommunicationStyle || "",
-          TapHealthAndWellnessCovidVaccine:
-            response?.preferences?.TapHealthAndWellnessCovidVaccine ?? false,
-          TapPersonalDetailsSexualOrientation:
-            response?.preferences?.TapPersonalDetailsSexualOrientation || "",
-          TapPersonalDetailsRelationshipGoals:
-            response?.preferences?.TapPersonalDetailsRelationshipGoals || "",
-          TapMusicAndEntertainmentSpotifyAnthem:
-            response?.preferences?.TapMusicAndEntertainmentSpotifyAnthem || "",
-          TapMyCommunicationStyleResponsiveness:
-            response?.preferences?.TapMyCommunicationStyleResponsiveness || "",
-          TapMyCommunicationStylePhoneUsageHabits:
-            response?.preferences?.TapMyCommunicationStylePhoneUsageHabits ||
-            "",
-          TapMusicAndEntertainmentTopSpotifyArtists:
-            response?.preferences?.TapMusicAndEntertainmentTopSpotifyArtists ||
-            "",
-          TapMyCommunicationStylePreferredCommunicationMethod:
-            response?.preferences
-              ?.TapMyCommunicationStylePreferredCommunicationMethod || "",
-          CurLocation: {
-            TapProfilelng:
-              response?.preferences?.CurLocation?.TapProfilelng ?? 0,
-            TapProfilelat:
-              response?.preferences?.CurLocation?.TapProfilelat ?? 0,
-            tap_profile_id:
-              response?.preferences?.CurLocation?.tap_profile_id ?? 0,
-            TapProfileAreaName:
-              response?.preferences?.CurLocation?.TapProfileAreaName || "",
-            TapProfileCityName:
-              response?.preferences?.CurLocation?.TapProfileCityName || "",
-            TapProfileCountryName:
-              response?.preferences?.CurLocation?.TapProfileCountryName || "",
-            TapProfileCountryCode:
-              response?.preferences?.CurLocation?.TapProfileCountryCode || "",
-          },
-        });
-      }
-    } catch (error) {
-      console.log("error in getting selected preferences", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getAllowedValues = async () => {
-    try {
-      setIsLoading(true);
-      let response = await GetAllowedValuesService();
-      if (response) {
-        setAllowedValues(response);
-        updateAllowedCtx(response);
-      }
-    } catch (error) {
-      console.log("error in getting allowed values", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const getAllowedValues = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     let response = await GetAllowedValuesService();
+  //     if (response) {
+  //       setAllowedValues(response);
+  //       updateAllowedCtx(response);
+  //     }
+  //   } catch (error) {
+  //     console.log("error in getting allowed values", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const onSavePressed = async () => {
     saveUpdates();
@@ -530,8 +528,11 @@ export const MatchPreferencesScreen = () => {
   // };
 
   const onLocationPressed = async () => {
-    navigation.navigate("EditCityScreen", {
-      isMatchPreferencesFlow: true,
+    router.push({
+      pathname: "/(app)/editCityScreen.router",
+      params: {
+        isMatchPreferencesFlow: JSON.stringify(true),
+      },
     });
   };
 
@@ -566,11 +567,15 @@ export const MatchPreferencesScreen = () => {
 
   return (
     <MatchPreferences
-      isLoading={isLoading}
-      allowedValues={allowedValues}
-      newSelectedCategory={newSelectedCategory}
       isAlertPopupVisible={isAlertPopupVisible}
-      matchPreferences={matchPreferences}
+      allowedValues={allowedValuesResponse?.data}
+      newSelectedCategory={newSelectedCategory}
+      matchPreferences={matchedPreferencesResponse?.data?.preferences}
+      isLoading={
+        isLoading ||
+        allowedValuesResponse?.isLoading ||
+        matchedPreferencesResponse?.isLoading
+      }
       onSavePressed={onSavePressed}
       onLocationPressed={onLocationPressed}
       onHandleSwitchVal={onHandleSwitchVal}

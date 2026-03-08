@@ -1,19 +1,19 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import IconButton from "../../components/common/buttons/IconButton";
 import MainHeader from "../../components/common/headers/MainHeader";
 import Loader from "../../components/common/Loader";
 import SearchInput from "../../components/common/textInputs/SearchInput";
-import { TapAppColors } from "../../constants/TapAppColors";
-import { borderRadius } from "../../utils/CommonFunctions";
+import { editCityStyles } from "./EditCityStyles";
 
 interface IProps {
   searchInputVal: string;
   isLoading: boolean;
-  onHeaderBackPressed: () => void;
   onGetLocationPressed: () => void;
   onSearchChangeText: (va: string) => void;
 }
+
+const styles = editCityStyles;
 
 const EditCity = (props: IProps) => {
   return (
@@ -22,8 +22,6 @@ const EditCity = (props: IProps) => {
         title="Edit City"
         showBackIcon={true}
         showSettingsIcon={false}
-        onHeaderBackPressed={props.onHeaderBackPressed}
-        onHeaderSettingsPressed={() => {}}
       />
       <Loader isLoading={props.isLoading} />
       <View style={styles.innerContainer}>
@@ -45,21 +43,3 @@ const EditCity = (props: IProps) => {
 };
 
 export default EditCity;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: TapAppColors.black,
-  },
-  innerContainer: {
-    flex: 1,
-    width: "90%",
-    alignSelf: "center",
-  },
-  touchableView: {
-    marginTop: 10,
-    paddingHorizontal: 10,
-    borderRadius: borderRadius,
-    backgroundColor: TapAppColors.appBackground,
-  },
-});

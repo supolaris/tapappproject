@@ -1,14 +1,13 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "./ApiClient";
-import { apisConfig } from "./ApiConfigs";
 
-export const getRequest = (endPoint: string, staleTime?: number) => {
+export const getRequest = (endPoint: string, customBaseURL?: string, staleTime?: number) => {
   console.log("endPoint =>>>>>>>", endPoint);
 
   const response = useQuery({
-    queryKey: [endPoint],
+    queryKey: [endPoint, customBaseURL],
     queryFn: async () => {
-      const res = await apiClient.get(endPoint);
+      const res = await apiClient.get(endPoint, { baseURL: customBaseURL });
       return res.data;
     },
     staleTime: staleTime ?? 5 * 60 * 1000,
@@ -74,7 +73,7 @@ export const infiniteQueryRequest = (
     const res = await apiClient.get(
       `${endPoint}${
         isQueryStart ? "?" : "&"
-      }page=${pageParam}&perPage=${perPage ?? apisConfig.perPage}`,
+      }page=${pageParam}&perPage=${perPage ?? 10}`,
       { baseURL: customBaseURL },
     );
 

@@ -1,6 +1,7 @@
 import { ImageSourcePropType } from "react-native";
 import { InteractionsEnums } from "../constants/AppEnums";
 import { ItemsData } from "../constants/StaticData";
+import { Nullable } from "./apiInterfaces/commonInterface";
 
 export type ItemsDataType = keyof typeof ItemsData;
 
@@ -75,7 +76,7 @@ export interface IUserCurlLocation {
 export interface ICreatedUpdatedDeleted {
   CreatedAt: string;
   UpdatedAt: string;
-  DeletedAt: null;
+  DeletedAt: Nullable<string>;
 }
 
 export interface IUserProfile extends ICreatedUpdatedDeleted {
@@ -129,4 +130,14 @@ export interface IUserProfile extends ICreatedUpdatedDeleted {
   TapLanguagesLanguage: string[];
   images: IUserImages[];
   CurLocation: IUserCurlLocation;
+}
+
+export interface ICurlLocation {
+  TapProfilelng: number;
+  TapProfilelat: number;
+  tap_profile_id: number;
+  TapProfileAreaName: string;
+  TapProfileCityName: string;
+  TapProfileCountryName: string;
+  TapProfileCountryCode: string;
 }

@@ -10,13 +10,6 @@ export const useGetUserById = (userId: number) => {
   return response;
 };
 
-export const useGetAllowedValues = () => {
-  const response = getRequest(
-    `${process.env.EXPO_PUBLIC_API_VERSION}/allowedValues`,
-  );
-  return response;
-};
-
 export const useGetUserPreferences = () => {
   const response = getRequest(
     `${process.env.EXPO_PUBLIC_API_VERSION}/users/${userEmail}/profile`,

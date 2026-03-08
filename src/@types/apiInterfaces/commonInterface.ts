@@ -12,12 +12,6 @@ export interface IAllowedValuesSubSection {
   subTitle: string;
 }
 
-// geo location
-
-export interface IGeoLocationResponse {
-  geonames: IGeoNames[];
-}
-
 export interface IGeoNames {
   adminCode1: string;
   lng: string;
@@ -40,17 +34,6 @@ export interface IGeoNames {
 
 interface IAdminCodes1 {
   ISO3166_2: string;
-}
-
-// location
-export interface ICurlLocation {
-  TapProfilelng: number;
-  TapProfilelat: number;
-  tap_profile_id: number;
-  TapProfileAreaName: string;
-  TapProfileCityName: string;
-  TapProfileCountryName: string;
-  TapProfileCountryCode: string;
 }
 
 // user data
