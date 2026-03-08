@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ILikesSent } from "../../@types/apiInterfaces/SignalInterface";
 // import { getLikesSentService } from "../../services/LikesServices";
 import { SignalsEnums } from "@/src/constants/AppEnums";
 import { useGetSentSignals } from "@/src/services/LikesServices";
+import { useRouter } from "expo-router";
 import Likes from "./Likes";
 
 export function LikesScreen() {
+  const router = useRouter();
   const [selectedLikesView, setSelectedLikesView] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [signalsData, setSignalsData] = useState<ILikesSent[]>([]);
@@ -19,33 +21,28 @@ export function LikesScreen() {
 
   const onBoostPress = () => {};
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  const getCurrentUser = async () => {
-    // try {
-    //   setIsLoading(true);
-    //   // const response = await getLikesSentService("sent");
-    //   if (response) {
-    //     console.log("response of likes sent", response);
-    //     setSignalsData(response);
-    //   }
-    // } catch (error) {
-    //   console.log("Error in getting my profile data", error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+  const onUserPressed = (userId: number) => {
+    if (!userId) {
+      console.log("userId is not available for preview =>>>>>", userId);
+      return;
+    }
+    router.push({
+      pathname: "/(app)/profilePreview.router",
+      params: {
+        userId: userId,
+      },
+    });
   };
 
   return (
     <Likes
+      isLoading={isLoading}
+      signalsData={signalsData}
+      selectedLikesView={selectedLikesView}
       likeSentData={getSentSignalsResponse?.data}
       likeReceivedData={getReceivedSignalsResponse?.data}
-      signalsData={signalsData}
-      isLoading={isLoading}
-      selectedLikesView={selectedLikesView}
       onBoostPress={onBoostPress}
+      onUserPressed={onUserPressed}
       onLikesTypePressed={onLikesTypePressed}
     />
   );

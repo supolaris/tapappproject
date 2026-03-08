@@ -40,12 +40,16 @@ const RenderHomeUserSwiper = (props: IProps) => {
         <View style={styles.useDetailsView}>
           <View style={styles.userNameAgeView}>
             <Text style={styles.userNameText}>{props.item?.first_name}</Text>
-            <Text style={styles.userAgeText}>{props.item?.age}</Text>
+            {props.item?.age && (
+              <Text style={styles.userAgeText}>{props.item?.age}</Text>
+            )}
           </View>
           <View style={styles.locationView}>
-            <Text style={styles.locationText}>
-              {props.item?.distance} Miles Away
-            </Text>
+            {props.item?.distance && (
+              <Text style={styles.locationText}>
+                {props.item?.distance} Miles Away
+              </Text>
+            )}
             <View style={{ justifyContent: "center", marginLeft: 8 }}>
               <Entypo
                 style={styles.flatListLocationIcon}

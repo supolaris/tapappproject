@@ -9,12 +9,13 @@ import { TapAppColors } from "../../constants/TapAppColors";
 import LikesSentReceiveView from "./LikesSentView";
 
 interface ILikesProps {
-  likeSentData: ISignalsData[];
-  likeReceivedData: ISignalsData[];
-  signalsData: ILikesSent[];
   isLoading: boolean;
   selectedLikesView: number;
+  signalsData: ILikesSent[];
+  likeSentData: ISignalsData[];
+  likeReceivedData: ISignalsData[];
   onBoostPress: () => void;
+  onUserPressed: (userId: number) => void;
   onLikesTypePressed: (val: number) => void;
 }
 
@@ -27,16 +28,20 @@ const Likes = (props: ILikesProps) => {
     <View style={styles.container}>
       {/* Navigation button to profile preview */}
       {/* <Loader isLoading={props.isLoading} /> */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.profilePreviewButton}
         onPress={navigateToProfilePreview}
       >
         <Text style={styles.profilePreviewButtonText}>
           View Profile Preview
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <MainHeader showBackIcon={false} showSettingsIcon={false} title="Likes" />
+      <MainHeader
+        showBackIcon={false}
+        showSettingsIcon={false}
+        title="Interactions"
+      />
       <View style={styles.likesHeaderView}>
         <View
           style={[
@@ -119,9 +124,15 @@ const Likes = (props: ILikesProps) => {
       </View>
       <View style={styles.innerContainer}>
         {props.selectedLikesView === 0 ? (
-          <LikesSentReceiveView likesData={props.likeReceivedData} />
+          <LikesSentReceiveView
+            likesData={props.likeReceivedData}
+            onUserPressed={props.onUserPressed}
+          />
         ) : props.selectedLikesView === 1 ? (
-          <LikesSentReceiveView likesData={props.likeSentData} />
+          <LikesSentReceiveView
+            likesData={props.likeSentData}
+            onUserPressed={props.onUserPressed}
+          />
         ) : (
           <LikesSentReceiveView likesData={props.likeReceiveData} />
         )}

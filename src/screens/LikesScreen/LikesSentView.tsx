@@ -20,14 +20,14 @@ import { activeOpacity } from "../../utils/CommonFunctions";
 interface IProps {
   likesData: ISignalsData[];
   onBoostPress: () => void;
-  onUserPressed: () => void;
+  onUserPressed: (userId: number) => void;
 }
 
 const LikesSentReceiveView = (props: IProps) => {
   const renderItem = ({ item }: { item: ISignalsData }) => {
     return (
       <TouchableOpacity
-        onPress={props.onUserPressed}
+        onPress={() => props.onUserPressed(item.TapRecepientID)}
         activeOpacity={activeOpacity}
         style={styles.renderContainer}
       >
@@ -38,10 +38,14 @@ const LikesSentReceiveView = (props: IProps) => {
         />
         <View style={styles.interactionView}>
           <AntDesign
-            size={item.interaction === InteractionsEnums.LIKE ? 40 : 45}
+            size={
+              item.SignalDetails?.action === InteractionsEnums.LIKE ? 40 : 45
+            }
             color={TapAppColors.primaryColor}
             name={
-              item.interaction === InteractionsEnums.LIKE ? "heart" : "star"
+              item.SignalDetails?.action === InteractionsEnums.LIKE
+                ? "heart"
+                : "star"
             }
           />
           <Text
@@ -49,7 +53,10 @@ const LikesSentReceiveView = (props: IProps) => {
             style={[
               styles.timeText,
               {
-                top: item.interaction === InteractionsEnums.LIKE ? 5 : 10,
+                top:
+                  item.SignalDetails?.action === InteractionsEnums.LIKE
+                    ? 5
+                    : 10,
               },
             ]}
           >
@@ -102,6 +109,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     borderRadius: borderRadius.large,
+    backgroundColor: TapAppColors.inactiveColor,
   },
   interactionView: {
     right: 2,

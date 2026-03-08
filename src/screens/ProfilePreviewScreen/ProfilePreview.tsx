@@ -1,6 +1,7 @@
 import { IAllowedValues } from "@/src/@types/apiInterfaces/commonInterface";
 import { IUserByIdData } from "@/src/@types/apiInterfaces/ProfilePreviewInterface";
 import CustomText from "@/src/components/common/CustomText";
+import MainHeader from "@/src/components/common/headers/MainHeader";
 import Loader from "@/src/components/common/Loader";
 import RenderImagesPreview from "@/src/components/common/renderComponents/RenderImagesPreview";
 import RenderPreferences from "@/src/components/common/renderComponents/RenderPreferences";
@@ -17,6 +18,7 @@ interface IProps {
 const ProfilePreview = (props: IProps) => {
   return (
     <View style={styles.container}>
+      <MainHeader showBackIcon={true} title="Profile Preview" />
       {props.userByIdData?.profile?.images && (
         <RenderImagesPreview userImages={props.userByIdData?.profile?.images} />
       )}
