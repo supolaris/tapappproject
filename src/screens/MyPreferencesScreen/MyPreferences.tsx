@@ -391,7 +391,7 @@ const MyPreferences = (props: SettingsProps) => {
           </ScrollView>
         </View>
       ) : (
-        <ProfilePreviewScreen />
+        <ProfilePreviewScreen isHeaderHidden />
       )}
     </>
   );

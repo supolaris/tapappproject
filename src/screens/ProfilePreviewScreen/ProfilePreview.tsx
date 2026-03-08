@@ -10,6 +10,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 interface IProps {
+  isHeaderHidden: boolean;
   isLoading: boolean;
   allowedValues: IAllowedValues[];
   userByIdData: IUserByIdData;
@@ -18,7 +19,9 @@ interface IProps {
 const ProfilePreview = (props: IProps) => {
   return (
     <View style={styles.container}>
-      <MainHeader showBackIcon={true} title="Profile Preview" />
+      {!props.isHeaderHidden && (
+        <MainHeader showBackIcon={true} title="Profile Preview" />
+      )}
       {props.userByIdData?.profile?.images && (
         <RenderImagesPreview userImages={props.userByIdData?.profile?.images} />
       )}

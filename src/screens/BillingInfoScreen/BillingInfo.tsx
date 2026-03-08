@@ -82,22 +82,21 @@ const BillingInfoForm = (props: {
   return (
     <View style={styles.container}>
       <Loader isLoading={parentProps.isLoading} />
-      {/* <DatePicker
-        modal
+      {/* <DateTimePicker
+        display="default"
         mode="date"
         open={parentProps.isDatePickerVisible}
-        date={
+        value={
           values?.DOB
             ? new Date(values?.DOB)
-            : moment().subtract(18, "years").toDate()
+            : undefined
         }
-        onConfirm={(date: Date) => {
-          const selectedDate = moment(date);
-          const convertedISO = selectedDate.toISOString();
+        onChange={(event) => {
+          const selectedDate = event.nativeEvent.timestamp;
+          const convertedISO = new Date(selectedDate).toISOString();
           setFieldValue("DOB", convertedISO);
-          parentProps.setIsDatePickerVisible(false);
         }}
-        onCancel={parentProps.onCancelDatePicker}
+        onDismiss={parentProps.onCancelDatePicker}
         maximumDate={moment().subtract(18, "years").toDate()}
       /> */}
       <ProfileDeletePopup
