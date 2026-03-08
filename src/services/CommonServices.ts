@@ -11,10 +11,7 @@ export const useGetLocationInfoService = (
   latitude: number,
   longitude: number,
 ) => {
-  console.log("latitude", latitude);
-  console.log("longitude", longitude);
-
-  const completeEndpoint = `findNearbyPlaceNameJSON?lat=${latitude}1&lng=${longitude}&username=${process.env.EXPO_PUBLIC_GEOLOCATION_USERNAME}`;
+  const completeEndpoint = `findNearbyPlaceNameJSON?lat=${latitude}&lng=${longitude}&username=supolaris`;
   const response = getRequest(completeEndpoint, "http://api.geonames.org/");
   return response;
 };
